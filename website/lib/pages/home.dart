@@ -9,7 +9,8 @@ class Home extends StatelessWidget {
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/idol-sketch.png"),
-          fit: BoxFit.contain,
+          fit: BoxFit.fitHeight,
+          alignment: Alignment.centerRight,
         ),
       ),
     );
