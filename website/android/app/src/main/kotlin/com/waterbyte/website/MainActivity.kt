@@ -1,0 +1,6 @@
+package com.waterbyte.website
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
