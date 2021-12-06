@@ -5,14 +5,25 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/idol-sketch.png"),
-          fit: BoxFit.fitHeight,
-          alignment: Alignment.centerRight,
+    return Stack(children: <Widget>[
+      Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/idol-sketch.png"),
+            fit: BoxFit.fitHeight,
+            alignment: Alignment.centerRight,
+          ),
         ),
       ),
-    );
+      Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/idol-sketch.png"),
+            fit: BoxFit.fitHeight,
+            alignment: Alignment.centerLeft,
+          ),
+        ),
+      ),
+    ]);
   }
 }
