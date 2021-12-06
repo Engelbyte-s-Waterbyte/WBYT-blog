@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# dsstore
+website/.DS_Store
