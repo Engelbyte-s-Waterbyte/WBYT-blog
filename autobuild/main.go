@@ -2,54 +2,62 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/fsnotify/fsnotify"
 )
 
-//
 var watcher *fsnotify.Watcher
 
-// main
 func main() {
-
-	// creates a new file watcher
-	watcher, _ = fsnotify.NewWatcher()
+	var err error
+	watcher, err = fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer watcher.Close()
 
-	// starting at the root of the project, walk each file/directory searching for
-	// directories
-	if err := filepath.Walk("/Users/skdomino/Desktop/test", watchDir); err != nil {
+	if err := filepath.Walk(".", watchDir); err != nil {
 		fmt.Println("ERROR", err)
 	}
 
-	//
 	done := make(chan bool)
-
-	//
+	var cmd *exec.Cmd
 	go func() {
 		for {
 			select {
-			// watch for events
-			case event := <-watcher.Events:
-				fmt.Printf("EVENT! %#v\n", event)
-
-				// watch for errors
-			case err := <-watcher.Errors:
-				fmt.Println("ERROR", err)
+			case _, ok := <-watcher.Events:
+				if !ok {
+					return
+				}
+				fmt.Println("here")
+				if cmd != nil {
+					if cmd.Process != nil {
+						fmt.Println("kill")
+						cmd.Process.Kill()
+					}
+				}
+				cmd = exec.Command("flutter", "build", "web")
+				fmt.Println(cmd.Run(), cmd.Stderr, cmd.Stdout)
+			case err, ok := <-watcher.Errors:
+				if !ok {
+					return
+				}
+				log.Println("error:", err)
 			}
 		}
 	}()
 
+	if err != nil {
+		log.Fatal(err)
+	}
 	<-done
 }
 
-// watchDir gets run as a walk func, searching for directories to add watchers to
 func watchDir(path string, fi os.FileInfo, err error) error {
-
-	// since fsnotify can watch all the files in a directory, watchers only need
-	// to be added to each nested directory
 	if fi.Mode().IsDir() {
 		return watcher.Add(path)
 	}
