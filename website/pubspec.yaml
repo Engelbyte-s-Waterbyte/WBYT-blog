@@ -13,11 +13,16 @@ dependencies:
   tabler_icons_flutter: ^1.1.1
   dio: ^4.0.4
 
-
 dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Italic.ttf
+          style: italic
   assets:
     - assets/
