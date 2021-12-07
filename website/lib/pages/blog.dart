@@ -10,7 +10,8 @@ class Blog extends StatelessWidget {
     return Scaffold(
       body: BaseLayout(
         heading: "Engelbyte's Waterbyte’s Blog",
-        subHeading: "... verfasst von Projektmitarbeitern sowie Leasingpersonal",
+        subHeading:
+            "... verfasst von Projektmitarbeitern sowie Leasingpersonal",
         headingIcon: TablerIcons.file_text,
         child: Container(
           child: Text("Abfahrt"),

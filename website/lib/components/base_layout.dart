@@ -20,15 +20,6 @@ class BaseLayout extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/idol-sketch.png"),
-                fit: BoxFit.fitHeight,
-                alignment: Alignment.centerRight,
-              ),
-            ),
-          ),
           const Positioned(
             bottom: 20,
             left: 20,
