@@ -13,9 +13,18 @@ class Blog extends StatelessWidget {
         subHeading:
             "... verfasst von Projektmitarbeitern sowie Leasingpersonal",
         headingIcon: TablerIcons.file_text,
-        child: Container(
-          child: Text("Abfahrt"),
-        ),
+        child: LayoutBuilder(builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                ),
+                Text("fsdfd"),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
