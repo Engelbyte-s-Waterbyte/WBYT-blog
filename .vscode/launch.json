@@ -9,7 +9,7 @@
       "cwd": "website",
       "request": "launch",
       "type": "dart",
-      "program":"lib/main.dart"
+      "program": "lib/main.dart"
     },
     {
       "name": "website (profile mode)",
