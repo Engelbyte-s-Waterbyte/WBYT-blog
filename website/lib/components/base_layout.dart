@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:website/pages/home.dart';
 
 class BaseLayout extends StatelessWidget {
   const BaseLayout({
@@ -28,26 +29,55 @@ class BaseLayout extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
           ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 242,
+                padding: const EdgeInsets.only(left: 40),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/WaterbyteLogo.png",
+                      height: 150,
+                      width: 200,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        children: [
+                          buildNavigationListTile(
+                            context: context,
+                            title: "Blog",
+                            icon: TablerIcons.file_text,
+                            route: "/blog",
+                          ),
+                          buildNavigationListTile(
+                            context: context,
+                            title: "Projects",
+                            icon: TablerIcons.ambulance,
+                            route: "/projects",
+                          ),
+                          buildNavigationListTile(
+                            context: context,
+                            title: "Team",
+                            icon: TablerIcons.alien,
+                            route: "/team",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [Text(heading), Text(subHeading), child],
+                ),
+              ),
+            ],
+          ),
         ],
-      ),
-    );
-  }
-
-  ListTile buildNavigationListTile({
-    required BuildContext context,
-    required String title,
-    required IconData icon,
-    required String route,
-  }) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Colors.black,
-      ),
-      onTap: () => Navigator.pushNamed(context, route),
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

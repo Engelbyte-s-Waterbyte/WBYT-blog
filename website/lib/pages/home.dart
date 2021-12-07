@@ -64,27 +64,27 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
 
-  ListTile buildNavigationListTile({
-    required BuildContext context,
-    required String title,
-    required IconData icon,
-    required String route,
-  }) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: Colors.black,
-        size: 32,
+ListTile buildNavigationListTile({
+  required BuildContext context,
+  required String title,
+  required IconData icon,
+  required String route,
+}) {
+  return ListTile(
+    leading: Icon(
+      icon,
+      color: Colors.black,
+      size: 32,
+    ),
+    onTap: () => Navigator.pushNamed(context, route),
+    title: Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      onTap: () => Navigator.pushNamed(context, route),
-      title: Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Text(
-          title,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }
