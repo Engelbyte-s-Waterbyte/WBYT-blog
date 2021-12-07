@@ -125,7 +125,7 @@ Widget buildNavigationListTile({
   required IconData icon,
   required String route,
 }) {
-  final active = (ModalRoute.of(context)?.settings.name ?? "") == route;
+  final active = ModalRoute.of(context)!.settings.name == route;
   return $home.buildNavigationListTile(
     context: context,
     title: title,

@@ -30,7 +30,7 @@ class WaterbyteApp extends StatelessWidget {
         '/blog/[0-9]+',
         (context) => BlogPost(
           postIdx: int.parse(
-            (ModalRoute.of(context)?.settings.name ?? "").split("/")[2],
+            ModalRoute.of(context)!.settings.name!.split("/")[2],
           ),
         ),
       ),
@@ -45,7 +45,7 @@ class WaterbyteApp extends StatelessWidget {
         Route? foundRoute = routes.firstWhere(
           (route) {
             final regExpPattern = RegExp(r'^' + route!.pattern + r'$');
-            return regExpPattern.hasMatch(settings.name ?? "");
+            return regExpPattern.hasMatch(settings.name!);
           },
           orElse: () => null,
         );
