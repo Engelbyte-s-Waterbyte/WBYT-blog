@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,6 +14,10 @@ import (
 var watcher *fsnotify.Watcher
 
 func main() {
+	go func() {
+		http.ListenAndServe(":8888", http.FileServer(http.Dir("./build/web")))
+	}()
+
 	var err error
 	watcher, err = fsnotify.NewWatcher()
 	if err != nil {
