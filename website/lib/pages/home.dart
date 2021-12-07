@@ -21,18 +21,17 @@ class Home extends StatelessWidget {
           const ListTile(
             leading: Icon(TablerIcons.home),
           ),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Blogs", style: TextStyle(fontSize: 25))
+          const ListTile(
+            leading: Icon(TablerIcons.ambulance),
+          ),
+          const ListTile(
+            leading: Icon(TablerIcons.alien),
+          ),
+          Row(children: [
+            const Icon(TablerIcons.ambulance),
+            Text("Blogs", style: const TextStyle(fontSize: 25))
           ]),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Projects", style: TextStyle(fontSize: 25))
-          ]),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Team", style: TextStyle(fontSize: 25))
-          ]),
+          
         ]),
         const Positioned(
           bottom: 20,
