@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class BaseLayout extends StatelessWidget {
-  const BaseLayout({Key? key, required this.child}) : super(key: key);
+  const BaseLayout({
+    Key? key,
+    required this.child,
+    required this.heading,
+    required this.subHeading,
+    required this.headingIcon,
+  }) : super(key: key);
 
+  final String heading;
+  final String subHeading;
+  final IconData headingIcon;
   final Widget child;
 
   @override
