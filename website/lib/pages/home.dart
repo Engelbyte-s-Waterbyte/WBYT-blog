@@ -34,6 +34,7 @@ class Home extends StatelessWidget {
                         title: "Blog",
                         icon: TablerIcons.file_text,
                         route: "/blog",
+                        active: true,
                       ),
                       buildNavigationListTile(
                         context: context,
@@ -67,30 +68,36 @@ class Home extends StatelessWidget {
   }
 }
 
-ListTile buildNavigationListTile({
+Widget buildNavigationListTile({
   required BuildContext context,
   required String title,
   required IconData icon,
   required String route,
+  bool active = false,
 }) {
-  return ListTile(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5),
-    ),
-    leading: Icon(
-      icon,
-      color: Colors.black,
-      size: 32,
-    ),
+  return InkWell(
     onTap: () => Navigator.pushNamed(context, route),
-    title: Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    focusColor: Colors.transparent,
+    hoverColor: Colors.transparent,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Colors.black,
+            size: 32,
+          ),
+          const SizedBox(width: 15),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     ),
-    focusColor: Colors.white,
-    hoverColor: Colors.white,
   );
 }
