@@ -19,8 +19,13 @@ class Home extends StatelessWidget {
             ),
           ),
           Column(
+<<<<<<< HEAD
             
+=======
+            crossAxisAlignment: CrossAxisAlignment.start,
+>>>>>>> ce18b5a6186e9cd8b1e73358fd696f44f69ed796
             children: [
+              Image.asset("assets/WaterbyteLogo.png", width: 242),
               buildNavigationListTile(
                 context: context,
                 title: "Blog",
