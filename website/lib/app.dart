@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:website/pages/home.dart';
+import 'package:website/pages/blog.dart';
 import 'package:website/pages/not_found.dart';
 
 class Route {
@@ -18,6 +19,10 @@ class WaterbyteApp extends StatelessWidget {
       Route(
         '/',
         (context) => const Home(),
+      ),
+      Route(
+        '/blog',
+        (context) => const Blog(),
       ),
     ];
     return MaterialApp(
