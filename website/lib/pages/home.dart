@@ -17,26 +17,21 @@ class Home extends StatelessWidget {
           ),
         ),
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
-            'Blogs',
-            textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          Container(
+              child: Row(children: const [
+            Text("Icon", style: TextStyle(fontSize: 25)),
+            Text("Blogs", style: TextStyle(fontSize: 25))
+          ])),
           Container(
               child: Row(children: const [
             Text("Icon", style: TextStyle(fontSize: 25)),
             Text("Projects", style: TextStyle(fontSize: 25))
           ])),
-          Text(
-            'Projects',
-            textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'Team',
-            textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          Container(
+              child: Row(children: const [
+            Text("Icon", style: TextStyle(fontSize: 25)),
+            Text("Team", style: TextStyle(fontSize: 25))
+          ])),
         ])
       ]),
     );
