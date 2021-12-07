@@ -80,7 +80,7 @@ Widget buildNavigationListTile({
       borderRadius: BorderRadius.circular(10),
     ),
     child: InkWell(
-      onTap: () => Navigator.pushNamed(context, route),
+      onTap: active ? null : () => Navigator.pushNamed(context, route),
       focusColor: Colors.transparent,
       hoverColor: Colors.transparent,
       child: Padding(
