@@ -7,6 +7,7 @@ class Blog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("here");
     return Scaffold(
       body: BaseLayout(
         heading: "Engelbyte's Waterbyte’s Blog",
