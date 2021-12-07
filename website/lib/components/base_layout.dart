@@ -38,10 +38,13 @@ class BaseLayout extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 40),
                 child: Column(
                   children: [
-                    Image.asset(
-                      "assets/WaterbyteLogo.png",
-                      height: 150,
-                      width: 200,
+                    InkWell(
+                      onTap: () => Navigator.pushNamed(context, "/"),
+                      child: Image.asset(
+                        "assets/WaterbyteLogo.png",
+                        height: 150,
+                        width: 200,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
