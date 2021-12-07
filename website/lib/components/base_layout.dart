@@ -72,17 +72,20 @@ class BaseLayout extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(headingIcon),
-                          Text(heading),
-                        ],
-                      ),
-                      Text(subHeading),
-                      child
-                    ],
+                  child: Container(
+                    color: Colors.red,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(headingIcon),
+                            Text(heading),
+                          ],
+                        ),
+                        Text(subHeading),
+                        child
+                      ],
+                    ),
                   ),
                 ),
               ),
