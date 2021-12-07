@@ -34,7 +34,6 @@ class Home extends StatelessWidget {
                         title: "Blog",
                         icon: TablerIcons.file_text,
                         route: "/blog",
-                        active: true,
                       ),
                       buildNavigationListTile(
                         context: context,
@@ -75,28 +74,39 @@ Widget buildNavigationListTile({
   required String route,
   bool active = false,
 }) {
-  return InkWell(
-    onTap: () => Navigator.pushNamed(context, route),
-    focusColor: Colors.transparent,
-    hoverColor: Colors.transparent,
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.black,
-            size: 32,
-          ),
-          const SizedBox(width: 15),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  return Container(
+    decoration: BoxDecoration(
+      color: active ? Colors.grey[200] : Colors.transparent,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: InkWell(
+      onTap: () => Navigator.pushNamed(context, route),
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 15,
+          left: 10,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: Colors.black,
+              size: 32,
             ),
-          ),
-        ],
+            const SizedBox(width: 15),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
