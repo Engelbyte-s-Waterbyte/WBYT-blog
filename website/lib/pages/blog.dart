@@ -19,7 +19,9 @@ class Blog extends StatelessWidget {
           future: fetchBlogPosts(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             List<BlogPost> blogPosts = snapshot.data ?? [];
             return ListView.builder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:website/pages/home.dart';
+import 'package:website/pages/home.dart' as $home;
 
 class BaseLayout extends StatelessWidget {
   const BaseLayout({
@@ -114,4 +114,20 @@ class BaseLayout extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildNavigationListTile({
+  required BuildContext context,
+  required String title,
+  required IconData icon,
+  required String route,
+}) {
+  final active = (ModalRoute.of(context)?.settings.name ?? "") == route;
+  return $home.buildNavigationListTile(
+    context: context,
+    title: title,
+    icon: icon,
+    route: route,
+    active: active,
+  );
 }

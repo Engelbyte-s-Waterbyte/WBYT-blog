@@ -67,30 +67,47 @@ class Home extends StatelessWidget {
   }
 }
 
-ListTile buildNavigationListTile({
+Widget buildNavigationListTile({
   required BuildContext context,
   required String title,
   required IconData icon,
   required String route,
+  bool active = false,
 }) {
-  return ListTile(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5),
+  return Container(
+    decoration: BoxDecoration(
+      color: active ? Colors.grey[200] : Colors.transparent,
+      borderRadius: BorderRadius.circular(10),
     ),
-    leading: Icon(
-      icon,
-      color: Colors.black,
-      size: 32,
-    ),
-    onTap: () => Navigator.pushNamed(context, route),
-    title: Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    child: InkWell(
+      onTap: () => Navigator.pushNamed(context, route),
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 15,
+          left: 10,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: Colors.black,
+              size: 32,
+            ),
+            const SizedBox(width: 15),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
-    focusColor: Colors.white,
-    hoverColor: Colors.white,
   );
 }
