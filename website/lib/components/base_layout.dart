@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class BaseLayout extends StatelessWidget {
+  const BaseLayout({Key? key, required this.child}) : super(key: key);
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +19,6 @@ class Home extends StatelessWidget {
                 alignment: Alignment.centerRight,
               ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset("assets/WaterbyteLogo.png", width: 242),
-              buildNavigationListTile(
-                context: context,
-                title: "Blog",
-                icon: TablerIcons.file_text,
-                route: "/blog",
-              ),
-            ],
           ),
           const Positioned(
             bottom: 20,
