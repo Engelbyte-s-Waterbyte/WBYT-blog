@@ -18,17 +18,39 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset("assets/WaterbyteLogo.png", width: 242),
-              buildNavigationListTile(
-                context: context,
-                title: "Blog",
-                icon: TablerIcons.file_text,
-                route: "/blog",
-              ),
-            ],
+          Container(
+            width: 242,
+            padding: const EdgeInsets.only(left: 40),
+            child: Column(
+              children: [
+                Image.asset("assets/WaterbyteLogo.png"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    children: [
+                      buildNavigationListTile(
+                        context: context,
+                        title: "Blog",
+                        icon: TablerIcons.file_text,
+                        route: "/blog",
+                      ),
+                      buildNavigationListTile(
+                        context: context,
+                        title: "Projects",
+                        icon: TablerIcons.ambulance,
+                        route: "/projects",
+                      ),
+                      buildNavigationListTile(
+                        context: context,
+                        title: "Team",
+                        icon: TablerIcons.alien,
+                        route: "/team",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           const Positioned(
             bottom: 20,
@@ -53,11 +75,15 @@ class Home extends StatelessWidget {
       leading: Icon(
         icon,
         color: Colors.black,
+        size: 32,
       ),
       onTap: () => Navigator.pushNamed(context, route),
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Text(
+          title,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
