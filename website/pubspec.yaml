@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  tabler_icons_flutter: ^1.1.1
+  flutter_tabler_icons: ^1.1.1
   dio: ^4.0.4
 
 dev_dependencies:
