@@ -18,21 +18,8 @@ class Home extends StatelessWidget {
           ),
         ),
         Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const ListTile(
-            leading: Icon(TablerIcons.home),
-          ),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Blogs", style: TextStyle(fontSize: 25))
-          ]),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Projects", style: TextStyle(fontSize: 25))
-          ]),
-          Row(children: const [
-            Text("Icon", style: TextStyle(fontSize: 25)),
-            Text("Team", style: TextStyle(fontSize: 25))
-          ]),
+          buildNavigationListTile(
+              context, "Blog", TablerIcons.file_text, "/blog"),
         ]),
         const Positioned(
           bottom: 20,
@@ -41,6 +28,21 @@ class Home extends StatelessWidget {
               Text("Trusted by many people.", style: TextStyle(fontSize: 16)),
         ),
       ]),
+    );
+  }
+
+  ListTile buildNavigationListTile(
+      BuildContext context, String title, IconData icon, String route) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: Colors.black,
+      ),
+      onTap: () => Navigator.pushNamed(context, route),
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
