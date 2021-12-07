@@ -7,32 +7,47 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: <Widget>[
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/idol-sketch.png"),
-              fit: BoxFit.fitHeight,
-              alignment: Alignment.centerRight,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/idol-sketch.png"),
+                fit: BoxFit.fitHeight,
+                alignment: Alignment.centerRight,
+              ),
             ),
           ),
-        ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          buildNavigationListTile(
-              context, "Blog", TablerIcons.file_text, "/blog"),
-        ]),
-        const Positioned(
-          bottom: 20,
-          left: 20,
-          child:
-              Text("Trusted by many people.", style: TextStyle(fontSize: 16)),
-        ),
-      ]),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildNavigationListTile(
+                context: context,
+                title: "Blog",
+                icon: TablerIcons.file_text,
+                route: "/blog",
+              ),
+            ],
+          ),
+          const Positioned(
+            bottom: 20,
+            left: 20,
+            child: Text(
+              "Trusted by many people.",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  ListTile buildNavigationListTile(
-      BuildContext context, String title, IconData icon, String route) {
+  ListTile buildNavigationListTile({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required String route,
+  }) {
     return ListTile(
       leading: Icon(
         icon,
