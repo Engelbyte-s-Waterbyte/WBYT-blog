@@ -7,25 +7,15 @@ class Blog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("here");
     return Scaffold(
       body: BaseLayout(
         heading: "Engelbyte's Waterbyte’s Blog",
         subHeading:
             "... verfasst von Projektmitarbeitern sowie Leasingpersonal",
         headingIcon: TablerIcons.file_text,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                ),
-                Text("fsdfd"),
-              ],
-            ),
-          );
-        }),
+        child: Column(
+          children: [],
+        ),
       ),
     );
   }
