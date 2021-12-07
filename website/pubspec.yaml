@@ -22,7 +22,7 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter-Regular.ttf
-        - asset: assets/fonts/Inter-Italic.ttf
-          style: italic
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
   assets:
     - assets/
