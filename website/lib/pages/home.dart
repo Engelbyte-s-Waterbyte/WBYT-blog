@@ -74,6 +74,9 @@ ListTile buildNavigationListTile({
   required String route,
 }) {
   return ListTile(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
+    ),
     leading: Icon(
       icon,
       color: Colors.black,
@@ -87,5 +90,7 @@ ListTile buildNavigationListTile({
         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     ),
+    focusColor: Colors.white,
+    hoverColor: Colors.white,
   );
 }

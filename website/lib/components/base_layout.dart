@@ -19,6 +19,7 @@ class BaseLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           const Positioned(
@@ -70,22 +71,40 @@ class BaseLayout extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(width: 100),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Container(
-                    color: Colors.red,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Icon(headingIcon),
-                            Text(heading),
-                          ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 60),
+                      Row(
+                        children: [
+                          Icon(headingIcon, size: 55),
+                          const SizedBox(width: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              heading,
+                              style: const TextStyle(
+                                fontSize: 58,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        subHeading,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Text(subHeading),
-                        child
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 30),
+                      child,
+                    ],
                   ),
                 ),
               ),

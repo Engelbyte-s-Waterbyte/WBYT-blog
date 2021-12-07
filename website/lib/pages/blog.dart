@@ -32,6 +32,8 @@ class Blog extends StatelessWidget {
                     Image(
                       image: blogPost.thumbnail,
                       width: 202,
+                      height: 130,
+                      fit: BoxFit.cover,
                     ),
                     const SizedBox(width: 40),
                     Expanded(
@@ -40,7 +42,7 @@ class Blog extends StatelessWidget {
                         children: [
                           Text(blogPost.title),
                           Text(blogPost.post),
-                          Text(blogPost.creator)
+                          Text(blogPost.creator),
                         ],
                       ),
                     ),
