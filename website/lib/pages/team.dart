@@ -14,8 +14,7 @@ class Team extends StatelessWidget {
     return const Scaffold(
       body: BaseLayout(
         heading: "Das Team",
-        subHeading:
-            "Unser Personal - voller Ehrgeiz und Motivation ",
+        subHeading: "Unser Personal - voller Ehrgeiz und Motivation ",
         headingIcon: TablerIcons.alien,
         child: Members(),
       ),
@@ -36,39 +35,64 @@ class _MembersState extends State<Members> {
       "name": "Ungabunga",
       "position": "Knecht",
       "pic": "img/1.jpg",
-      "description": "loremloisl"
+      "description": "loremloisl",
+      "founder": true
     },
     {
       "name": "Tops",
       "position": "Daddy",
       "pic": "img/2.jpg",
-      "description": "loremloisl"
+      "description": "loremloisl",
+      "founder": true
     },
     {
       "name": "Sandele Groani",
       "position": "Chiller",
       "pic": "img/3.jpg",
-      "description": "loremloisl"
+      "description": "loremloisl",
+      "founder": true
     },
   ];
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: list_member.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Member(
-          member_name: list_member[index]['name'],
-          member_position: list_member[index]['position'],
-          member_pic: list_member[index]['pic'],
-          member_description: list_member[index]['description'],
-        );
-      },
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent( 
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 40),
+        Text(
+          "Die Gründer",
+          style: const TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 20),
+        GridView.builder(
+          shrinkWrap: true,
+          itemCount: list_member.length,
+          itemBuilder: (BuildContext context, int index) {
+            if (list_member[index]['founder'] == true) {}
+            return Member(
+              member_name: list_member[index]['name'],
+              member_position: list_member[index]['position'],
+              member_pic: list_member[index]['pic'],
+              member_description: list_member[index]['description'],
+            );
+          },
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 1000,
+              crossAxisSpacing: 50,
+              mainAxisSpacing: 20),
+        ),
+        SizedBox(height: 20),
+        Text(
+          "Leasing",
+          style: const TextStyle(
+            fontSize: 40,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -81,23 +105,59 @@ class Member extends StatelessWidget {
 
   const Member(
       {Key? key,
-      this.member_name,
+      required this.member_name,
       this.member_position,
-      this.member_pic,
-      this.member_description})
+      required this.member_pic,
+      required this.member_description})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Hero(
-        tag: member_name,
-        child: Material(
-            child: InkWell(
-                child: GridTile(
-          child: Image.asset(member_pic),
-        ))),
-      ),
-    );
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.transparent),
+        ),
+        child: Column(
+          children: [
+            Hero(
+              tag: member_name,
+              child: Material(
+                  child: InkWell(
+                      child: GridTile(
+                child: Container(
+                    height: 500,
+                    width: 600,
+                    child: AspectRatio(
+                      aspectRatio: 1.5,
+                      child: Image.asset(
+                        member_pic,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ))),
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 30),
+                    Text(
+                      member_name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(member_position),
+                    Text(member_description),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }
