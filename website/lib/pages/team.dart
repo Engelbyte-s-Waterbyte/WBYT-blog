@@ -15,7 +15,7 @@ class Team extends StatelessWidget {
       body: BaseLayout(
         heading: "Das Team",
         subHeading:
-            "Unser Personal - voller Ergeiz und Motivation ",
+            "Unser Personal - voller Ehrgeiz und Motivation ",
         headingIcon: TablerIcons.alien,
         child: Members(),
       ),
