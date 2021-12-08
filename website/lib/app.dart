@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'package:website/pages/Team.dart';
+import 'package:website/pages/team.dart';
 import 'package:website/pages/blog_post.dart';
->>>>>>> 8e57443800a1101aee3943b8e7dfff0cbf21322c
 import 'package:website/pages/home.dart';
 import 'package:website/pages/blog.dart';
-import 'package:website/pages/team.dart';
 import 'package:website/pages/not_found.dart';
 
 class Route {
