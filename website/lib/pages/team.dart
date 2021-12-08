@@ -32,24 +32,24 @@ class Members extends StatefulWidget {
 class _MembersState extends State<Members> {
   final list_member = [
     {
-      "name": "Ungabunga",
-      "position": "Knecht",
+      "name": "Miks",
+      "position": "Projektleiter",
       "pic": "img/1.jpg",
-      "description": "loremloisl",
+      "description": "Kommunikation/Eskalation",
       "founder": true
     },
     {
       "name": "Tops",
-      "position": "Daddy",
+      "position": "Projektmitarbeiter",
       "pic": "img/2.jpg",
-      "description": "loremloisl",
+      "description": "interne Projektmotivation",
       "founder": true
     },
     {
       "name": "Sandele Groani",
-      "position": "Chiller",
+      "position": "Projektmitarbeiterstellvertreter",
       "pic": "img/3.jpg",
-      "description": "loremloisl",
+      "description": "Periodischer Chill, Statusbericht",
       "founder": true
     },
   ];
@@ -80,10 +80,11 @@ class _MembersState extends State<Members> {
             );
           },
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 1000,
-              crossAxisSpacing: 50,
-              mainAxisSpacing: 20),
+              maxCrossAxisExtent: 500,
+              crossAxisSpacing: 60,
+              mainAxisSpacing: 100),
         ),
+        SizedBox(height: 20),
         SizedBox(height: 20),
         Text(
           "Leasing",
@@ -91,6 +92,22 @@ class _MembersState extends State<Members> {
             fontSize: 40,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        GridView.builder(
+          shrinkWrap: true,
+          itemCount: list_member.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Member(
+              member_name: list_member[index]['name'],
+              member_position: list_member[index]['position'],
+              member_pic: list_member[index]['pic'],
+              member_description: list_member[index]['description'],
+            );
+          },
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 500,
+              crossAxisSpacing: 50,
+              mainAxisSpacing: 20),
         ),
       ],
     );
@@ -113,51 +130,44 @@ class Member extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.transparent),
-        ),
+    return Container(
         child: Column(
-          children: [
-            Hero(
-              tag: member_name,
-              child: Material(
-                  child: InkWell(
-                      child: GridTile(
-                child: Container(
-                    height: 500,
-                    width: 600,
-                    child: AspectRatio(
-                      aspectRatio: 1.5,
-                      child: Image.asset(
-                        member_pic,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-              ))),
-            ),
-            Row(
-              children: [
-                const SizedBox(width: 30),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    Text(
-                      member_name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(member_position),
-                    Text(member_description),
-                    const SizedBox(height: 30),
-                  ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GridTile(
+          child: Container(
+              height: 500,
+              width: 400,
+              child: AspectRatio(
+                aspectRatio: 1.5,
+                child: Image.asset(
+                  member_pic,
+                  fit: BoxFit.cover,
                 ),
+              )),
+        ),
+        Row(
+          children: [
+            const SizedBox(width: 30),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                Text(
+                  member_name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(member_position),
+                Text(member_description),
+                const SizedBox(height: 30),
               ],
-            )
+            ),
           ],
-        ));
+        )
+      ],
+    ));
   }
 }
