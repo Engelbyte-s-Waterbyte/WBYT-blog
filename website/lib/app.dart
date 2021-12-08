@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:website/pages/Team.dart';
+import 'package:website/pages/blog_post.dart';
+>>>>>>> 8e57443800a1101aee3943b8e7dfff0cbf21322c
 import 'package:website/pages/home.dart';
 import 'package:website/pages/blog.dart';
 import 'package:website/pages/team.dart';
@@ -26,6 +31,14 @@ class WaterbyteApp extends StatelessWidget {
         (context) => const Blog(),
       ),
       Route(
+        '/blog/[0-9]+',
+        (context) => BlogPost(
+          postIdx: int.parse(
+            ModalRoute.of(context)!.settings.name!.split("/")[2],
+          ),
+        ),
+      ),
+      Route(
         '/team',
         (context) => const Team(),
       ),
@@ -36,7 +49,7 @@ class WaterbyteApp extends StatelessWidget {
         Route? foundRoute = routes.firstWhere(
           (route) {
             final regExpPattern = RegExp(r'^' + route!.pattern + r'$');
-            return regExpPattern.hasMatch(settings.name ?? "");
+            return regExpPattern.hasMatch(settings.name!);
           },
           orElse: () => null,
         );

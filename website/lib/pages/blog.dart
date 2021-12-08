@@ -24,33 +24,76 @@ class Blog extends StatelessWidget {
               );
             }
             List<BlogPost> blogPosts = snapshot.data ?? [];
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: blogPosts.length,
-              itemBuilder: (context, index) {
-                BlogPost blogPost = blogPosts[index];
-                return Row(
-                  children: [
-                    Image(
-                      image: blogPost.thumbnail,
-                      width: 202,
-                      height: 130,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 40),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(blogPost.title),
-                          Text(blogPost.post),
-                          Text(blogPost.creator),
-                        ],
+            return ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 569),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: blogPosts.length,
+                itemBuilder: (context, index) {
+                  BlogPost blogPost = blogPosts[index];
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image(
+                        image: blogPost.thumbnail,
+                        width: 202,
+                        height: 130,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ],
-                );
-              },
+                      const SizedBox(width: 40),
+                      Expanded(
+                        child: SizedBox(
+                          height: 130,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                blogPost.title,
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                blogPost.post,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Autor: ${blogPost.creator}",
+                                    style: const TextStyle(
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                  const Spacer(),
+                                  InkWell(
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    onTap: () => Navigator.pushNamed(
+                                      context,
+                                      "/blog/$index",
+                                    ),
+                                    child: const Text(
+                                      "Lesen Sie mehr >>",
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             );
           },
         ),
