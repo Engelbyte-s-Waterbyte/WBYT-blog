@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:website/pages/Team.dart';
 import 'package:website/pages/home.dart';
 import 'package:website/pages/blog.dart';
+import 'package:website/pages/team.dart';
 import 'package:website/pages/not_found.dart';
 
 class Route {
