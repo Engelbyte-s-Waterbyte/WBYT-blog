@@ -1,0 +1,24 @@
+{
+    "list_member":[
+    {
+      "name": "Miks",
+      "position": "Projektleiter",
+      "pic": "img/1.jpg",
+      "description": "Kommunikation/Eskalation",
+      "founder": true
+    },
+    {
+      "name": "Tops",
+      "position": "Projektmitarbeiter",
+      "pic": "img/2.jpg",
+      "description": "interne Projektmotivation",
+      "founder": true
+    },
+    {
+      "name": "Sandele Groani",
+      "position": "Projektmitarbeiterstellvertreter",
+      "pic": "img/3.jpg",
+      "description": "Periodischer Chill, Statusbericht",
+      "founder": true
+    }
+  ]}

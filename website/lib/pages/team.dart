@@ -29,30 +29,7 @@ class Members extends StatefulWidget {
   _MembersState createState() => _MembersState();
 }
 
-class _MembersState extends State<Members> {
-  final list_member = [
-    {
-      "name": "Miks",
-      "position": "Projektleiter",
-      "pic": "img/1.jpg",
-      "description": "Kommunikation/Eskalation",
-      "founder": true
-    },
-    {
-      "name": "Tops",
-      "position": "Projektmitarbeiter",
-      "pic": "img/2.jpg",
-      "description": "interne Projektmotivation",
-      "founder": true
-    },
-    {
-      "name": "Sandele Groani",
-      "position": "Projektmitarbeiterstellvertreter",
-      "pic": "img/3.jpg",
-      "description": "Periodischer Chill, Statusbericht",
-      "founder": true
-    },
-  ];
+class _MembersState extends State<Members> { 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,22 +44,26 @@ class _MembersState extends State<Members> {
           ),
         ),
         SizedBox(height: 20),
-        GridView.builder(
-          shrinkWrap: true,
-          itemCount: list_member.length,
-          itemBuilder: (BuildContext context, int index) {
-            if (list_member[index]['founder'] == true) {}
-            return Member(
-              member_name: list_member[index]['name'],
-              member_position: list_member[index]['position'],
-              member_pic: list_member[index]['pic'],
-              member_description: list_member[index]['description'],
+        FutureBuilder<List<TeamMember>>(
+          builder: (context) {
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: list_member.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (list_member[index]['founder'] == true) {}
+                return Member(
+                  member_name: list_member[index]['name'],
+                  member_position: list_member[index]['position'],
+                  member_pic: list_member[index]['pic'],
+                  member_description: list_member[index]['description'],
+                );
+              },
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 500,
+                  crossAxisSpacing: 60,
+                  mainAxisSpacing: 100),
             );
-          },
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 500,
-              crossAxisSpacing: 60,
-              mainAxisSpacing: 100),
+          }
         ),
         SizedBox(height: 20),
         SizedBox(height: 20),
