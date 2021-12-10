@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 
 class TeamMember {
-  final String memberName;
-  final String memberPosition;
-  final String memberPic;
-  final String memberDescription;
+  final String name;
+  final String position;
+  final String pic;
+  final String description;
   final bool founder;
 
-  const TeamMember(
-    required this.memberName,
-    required this.memberPosition,
-    required this.memberPic,
-    required this.memberDescription,
-    required this.founder
-  );
+  const TeamMember({
+    required this.name,
+    required this.position,
+    required this.pic,
+    required this.description,
+    required this.founder,
+  });
 
   TeamMember.fromJson(Map<String, dynamic> json)
-      : memberName = json["title"],
-        memberPosition = json["post"],
-        memberPic = json["creator"],
-        memberDescription = json["thumbnail"];
-
-  ImageProvider get thumbnail {
-    return NetworkImage(thumbnailURL);
-  }
+      : name = json["name"],
+        position = json["position"],
+        pic = json["pic"],
+        description = json["description"],
+        founder = json.containsKey("founder");
 }
