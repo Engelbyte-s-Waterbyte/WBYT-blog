@@ -36,35 +36,34 @@ class _MembersState extends State<Members> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 40),
-        Text(
+      children:[
+        const SizedBox(height: 40),
+        const Text(
           "Die Gründer",
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 40,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         FutureBuilder<List<TeamMember>>(
             future: fetchTeamMembers(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
-              final list_member = snapshot.data;
+              List<TeamMember> listmember = snapshot.data ?? [];
               return GridView.builder(
                 shrinkWrap: true,
                 itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  final teamMember = list_member![index];
-                  if (list_member[index].founder == true) {}
-
+                itemBuilder: (context, index) {
+                  final teamMember = listmember[index];
+                  if (listmember[index].founder == true) {}
                   return Member(
-                    member_name: list_member[index].name,
-                    member_position: teamMember.position,
-                    member_pic: teamMember.pic,
-                    member_description: teamMember.description,
+                    memberName: teamMember.name,
+                    memberPosition: teamMember.position,
+                    memberPic: teamMember.pic,
+                    memberDescription: teamMember.description,
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -88,17 +87,17 @@ class _MembersState extends State<Members> {
 }
 
 class Member extends StatelessWidget {
-  final member_name;
-  final member_position;
-  final member_pic;
-  final member_description;
+  final String memberName;
+  final String? memberPosition;
+  final memberPic;
+  final String memberDescription;
 
   const Member(
       {Key? key,
-      required this.member_name,
-      this.member_position,
-      required this.member_pic,
-      required this.member_description})
+      required this.memberName,
+      this.memberPosition,
+      required this.memberPic,
+      required this.memberDescription})
       : super(key: key);
 
   @override
@@ -114,7 +113,7 @@ class Member extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1.5,
                 child: Image.asset(
-                  member_pic,
+                  memberPic,
                   fit: BoxFit.cover,
                 ),
               )),
@@ -127,14 +126,14 @@ class Member extends StatelessWidget {
               children: [
                 const SizedBox(height: 30),
                 Text(
-                  member_name,
+                  memberName,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(member_position),
-                Text(member_description),
+                Text(memberPosition??''),
+                Text(memberDescription),
                 const SizedBox(height: 30),
               ],
             ),
@@ -148,7 +147,7 @@ class Member extends StatelessWidget {
 Future<List<TeamMember>> fetchTeamMembers() async {
   final response = await Dio().get("/resources/team-member.json");
   final List<TeamMember> teamMembers = [];
-  for (var teamMemberJson in response.data["list_member"]) {
+  for (var teamMemberJson in response.data["list-member"]) {
     teamMembers.add(TeamMember.fromJson(teamMemberJson));
   }
   return teamMembers;
