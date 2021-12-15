@@ -85,13 +85,17 @@ class BaseLayout extends StatelessWidget {
                         children: [
                           Icon(headingIcon, size: 55),
                           const SizedBox(width: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              heading,
-                              style: const TextStyle(
-                                fontSize: 58,
-                                fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Text(
+                                heading,
+                                maxLines: 1,
+                                overflow: TextOverflow.fade,
+                                style: const TextStyle(
+                                  fontSize: 58,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -100,6 +104,8 @@ class BaseLayout extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         subHeading,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

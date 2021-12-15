@@ -36,7 +36,7 @@ class _MembersState extends State<Members> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:[
+      children: [
         const SizedBox(height: 40),
         const Text(
           "Die Gründer",
@@ -52,35 +52,51 @@ class _MembersState extends State<Members> {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
-              List<TeamMember> listmember = snapshot.data ?? [];
-              return GridView.builder(
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  final teamMember = listmember[index];
-                  if (listmember[index].founder == true) {}
-                  return Member(
-                    memberName: teamMember.name,
-                    memberPosition: teamMember.position,
-                    memberPic: teamMember.pic,
-                    memberDescription: teamMember.description,
-                  );
-                },
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 500,
-                    crossAxisSpacing: 60,
-                    mainAxisSpacing: 100),
+              List<TeamMember> listmembers =
+                  snapshot.data!.where((x) => x.founder).toList();
+              return Wrap(
+                spacing: 10.0,
+                children: [
+                  for (var member in listmembers)
+                    Member(
+                      memberDescription: member.description,
+                      memberName: member.name,
+                      memberPosition: member.position,
+                      memberPic: member.pic,
+                    ),
+                ],
               );
             }),
-        SizedBox(height: 20),
-        SizedBox(height: 20),
-        Text(
+        const SizedBox(height: 20),
+        const SizedBox(height: 20),
+        const Text(
           "Leasing",
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 40,
             fontWeight: FontWeight.bold,
           ),
         ),
+        FutureBuilder<List<TeamMember>>(
+            future: fetchTeamMembers(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              List<TeamMember> listmembers =
+                  snapshot.data!.where((x) => !x.founder).toList();
+              return Wrap(
+                spacing: 10.0,
+                children: [
+                  for (var member in listmembers)
+                    Member(
+                      memberDescription: member.description,
+                      memberName: member.name,
+                      memberPosition: member.position,
+                      memberPic: member.pic,
+                    ),
+                ],
+              );
+            }),
       ],
     );
   }
@@ -103,49 +119,49 @@ class Member extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        width: 400,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GridTile(
-          child: Container(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
               height: 500,
               width: 400,
-              child: AspectRatio(
-                aspectRatio: 1.5,
-                child: Image.asset(
-                  memberPic,
-                  fit: BoxFit.cover,
-                ),
-              )),
-        ),
-        Row(
-          children: [
-            const SizedBox(width: 30),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 30),
-                Text(
-                  memberName,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              child: FittedBox(
+                  child: Image.network(
+                    memberPic,
                   ),
-                ),
-                Text(memberPosition??''),
-                Text(memberDescription),
-                const SizedBox(height: 30),
-              ],
+                  fit: BoxFit.fill),
             ),
+            Row(
+              children: [
+                const SizedBox(width: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 30),
+                    Text(
+                      memberName,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(memberPosition ?? ''),
+                    Flexible(
+                      child: Text(memberDescription),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ],
+            )
           ],
-        )
-      ],
-    ));
+        ));
   }
 }
 
 Future<List<TeamMember>> fetchTeamMembers() async {
-  final response = await Dio().get("/resources/team-member.json");
+  final response = await Dio().get("/resources/team-members.json");
   final List<TeamMember> teamMembers = [];
   for (var teamMemberJson in response.data["list-member"]) {
     teamMembers.add(TeamMember.fromJson(teamMemberJson));
