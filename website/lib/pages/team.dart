@@ -67,8 +67,7 @@ class _MembersState extends State<Members> {
                 ],
               );
             }),
-        const SizedBox(height: 20),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         const Text(
           "Leasing",
           style: TextStyle(
@@ -76,6 +75,7 @@ class _MembersState extends State<Members> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(height: 40),
         FutureBuilder<List<TeamMember>>(
             future: fetchTeamMembers(),
             builder: (context, snapshot) {
@@ -118,7 +118,7 @@ class Member extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 400,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,11 +126,12 @@ class Member extends StatelessWidget {
             Container(
               height: 500,
               width: 400,
-              child: FittedBox(
-                  child: Image.network(
-                    memberPic,
-                  ),
-                  fit: BoxFit.fill),
+              color: Colors.green,
+              // child: FittedBox(
+              //     child: Image.network(
+              //       memberPic,
+              //     ),
+              //     fit: BoxFit.fill),
             ),
             Row(
               children: [
@@ -146,10 +147,16 @@ class Member extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(memberPosition ?? ''),
-                    Flexible(
-                      child: Text(memberDescription),
-                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Text(
+                          memberPosition ?? '',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                    Text(memberDescription),
                     const SizedBox(height: 30),
                   ],
                 ),
