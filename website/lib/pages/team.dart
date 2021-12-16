@@ -1,5 +1,3 @@
-// ignore: file_names
-
 // ignore_for_file: file_names
 
 import 'package:dio/dio.dart';
@@ -56,6 +54,7 @@ class _MembersState extends State<Members> {
                   snapshot.data!.where((x) => x.founder).toList();
               return Wrap(
                 spacing: 10.0,
+                runSpacing: 20.0,
                 children: [
                   for (var member in listmembers)
                     Member(
@@ -105,7 +104,7 @@ class _MembersState extends State<Members> {
 class Member extends StatelessWidget {
   final String memberName;
   final String? memberPosition;
-  final memberPic;
+  final String memberPic;
   final String memberDescription;
 
   const Member(
@@ -127,38 +126,40 @@ class Member extends StatelessWidget {
               height: 500,
               width: 400,
               color: Colors.green,
-              // child: FittedBox(
-              //     child: Image.network(
-              //       memberPic,
-              //     ),
-              //     fit: BoxFit.fill),
+              child: FittedBox(
+                  child: Image.network(
+                    memberPic,
+                  ),
+                  fit: BoxFit.fill),
             ),
             Row(
               children: [
                 const SizedBox(width: 30),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    Text(
-                      memberName,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 30),
+                      Text(
+                        memberName,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Text(
-                          memberPosition ?? '',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    Text(memberDescription),
-                    const SizedBox(height: 30),
-                  ],
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Text(
+                            memberPosition ?? '',
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      Text(memberDescription),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
                 ),
               ],
             )
