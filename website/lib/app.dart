@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:website/pages/team.dart';
 import 'package:website/pages/blog_post.dart';
 import 'package:website/pages/home.dart';
+import 'package:website/pages/projects.dart';
 import 'package:website/pages/blog.dart';
 import 'package:website/pages/not_found.dart';
 
@@ -33,6 +34,10 @@ class WaterbyteApp extends StatelessWidget {
             ModalRoute.of(context)!.settings.name!.split("/")[2],
           ),
         ),
+      ),
+      Route(
+        '/projects',
+        (context) => const Projects(),
       ),
       Route(
         '/team',
