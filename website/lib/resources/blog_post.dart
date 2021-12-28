@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:website/resources/resource.dart';
 
-class BlogPost {
+class BlogPost extends Resource {
   final String title;
+  final String preview;
   final String post;
   final String creator;
   final String thumbnailURL;
 
   const BlogPost({
-    required this.title,
-    required this.post,
-    required this.creator,
-    required this.thumbnailURL,
+    this.title = '',
+    this.preview = '',
+    this.post = '',
+    this.creator = '',
+    this.thumbnailURL = '',
   });
-
-  BlogPost.fromJson(Map<String, dynamic> json)
-      : title = json["title"],
-        post = json["post"],
-        creator = json["creator"],
-        thumbnailURL = json["thumbnail"];
 
   ImageProvider get thumbnail {
     return NetworkImage(thumbnailURL);
+  }
+
+  @override
+  BlogPost fromJson(Map<String, dynamic> json) {
+    return BlogPost(
+      title: json["title"],
+      preview: json["preview"],
+      post: json["post"],
+      creator: json["creator"],
+      thumbnailURL: json["thumbnail"],
+    );
   }
 }
