@@ -24,14 +24,6 @@ class BaseLayout extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-           Positioned(
-            bottom: 20,
-            left: 20,
-            child: Text(
-              quote,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -120,6 +112,14 @@ class BaseLayout extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: Text(
+              quote,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),
