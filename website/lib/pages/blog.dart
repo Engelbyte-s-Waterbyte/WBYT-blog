@@ -18,6 +18,7 @@ class Blog extends StatelessWidget {
         headingIcon: TablerIcons.file_text,
         child: FutureBuilder<List<Resource>>(
           future: fetchResource(
+            path: "blog-posts.json",
             resource: const BlogPost(),
             mainKey: "blog-posts",
           ),
@@ -35,66 +36,68 @@ class Blog extends StatelessWidget {
                 itemCount: blogPosts.length,
                 itemBuilder: (context, index) {
                   BlogPost blogPost = blogPosts[index] as BlogPost;
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image(
-                        image: blogPost.thumbnail,
-                        width: 202,
-                        height: 130,
-                        fit: BoxFit.cover,
-                      ),
-                      const SizedBox(width: 40),
-                      Expanded(
-                        child: SizedBox(
-                          height: 130,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                blogPost.title,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 15),
-                              Text(
-                                blogPost.post,
-                                maxLines: 4,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const Spacer(),
-                              Row(
+                  return InkWell(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      "/blog/$index",
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: blogPost.thumbnail,
+                            width: 202,
+                            height: 130,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 40),
+                          Expanded(
+                            child: SizedBox(
+                              height: 130,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Autor: ${blogPost.creator}",
+                                    blogPost.title,
                                     style: const TextStyle(
-                                        fontStyle: FontStyle.italic),
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Text(
+                                    blogPost.post,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   const Spacer(),
-                                  InkWell(
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    onTap: () => Navigator.pushNamed(
-                                      context,
-                                      "/blog/$index",
-                                    ),
-                                    child: const Text(
-                                      "Lesen Sie mehr >>",
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Autor: ${blogPost.creator}",
+                                        style: const TextStyle(
+                                            fontStyle: FontStyle.italic),
                                       ),
-                                    ),
+                                      const Spacer(),
+                                      const Text(
+                                        "Lesen Sie mehr >>",
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
@@ -111,7 +114,7 @@ Future<List<Resource>> fetchResource({
   required String path,
   required String mainKey,
 }) async {
-  final response = await Dio().get("/resources/");
+  final response = await Dio().get("/resources/" + path);
   final List<Resource> resources = [];
   for (var resourceJson in response.data[mainKey]) {
     resources.add(resource.fromJson(resourceJson));
