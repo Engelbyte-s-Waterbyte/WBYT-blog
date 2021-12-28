@@ -1,0 +1,18 @@
+{
+    "projects": [
+      {
+        "name": "Charge",
+        "pic": "/img/projects/Charge.png",
+        "description": "",
+        "link":"https://github.com"
+        
+      },
+      {
+        "name": "Jamboree",
+        "pic": "/img/projects/Charge.png",
+        "description":"",
+        "link":"https://github.com"
+      }
+    ]
+  }
+  
