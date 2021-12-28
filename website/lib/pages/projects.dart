@@ -84,11 +84,8 @@ class ProjectWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Colors.green,
-            child: Image.network(
-              pic,
-            ),
+          Image.network(
+            pic,
           ),
           Row(
             children: [
