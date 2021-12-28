@@ -30,6 +30,7 @@ class _BlogPostState extends State<BlogPost> {
       subHeading:
           blogPost?.creator == null ? "" : "Ersteller: " + blogPost!.creator,
       headingIcon: TablerIcons.file_text,
+      quote: '',
       child: Column(
         children: [
           if (blogPost != null)
