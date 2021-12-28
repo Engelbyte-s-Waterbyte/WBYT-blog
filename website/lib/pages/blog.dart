@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:website/components/base_layout.dart';
 import 'package:website/resources/blog_post.dart';
+import 'package:website/resources/resource.dart';
 
 class Blog extends StatelessWidget {
   const Blog({Key? key}) : super(key: key);
@@ -15,22 +16,25 @@ class Blog extends StatelessWidget {
         subHeading:
             "... verfasst von Projektmitarbeitern sowie Leasingpersonal",
         headingIcon: TablerIcons.file_text,
-        child: FutureBuilder<List<BlogPost>>(
-          future: fetchBlogPosts(),
+        child: FutureBuilder<List<Resource>>(
+          future: fetchResource(
+            resource: const BlogPost(),
+            mainKey: "blog-posts",
+          ),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            List<BlogPost> blogPosts = snapshot.data ?? [];
+            List<Resource> blogPosts = snapshot.data ?? [];
             return ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 569),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: blogPosts.length,
                 itemBuilder: (context, index) {
-                  BlogPost blogPost = blogPosts[index];
+                  BlogPost blogPost = blogPosts[index] as BlogPost;
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -100,13 +104,17 @@ class Blog extends StatelessWidget {
       ),
     );
   }
+}
 
-  Future<List<BlogPost>> fetchBlogPosts() async {
-    final response = await Dio().get("/resources/blog-posts.json");
-    final List<BlogPost> blogPosts = [];
-    for (var blogPostJson in response.data["blog-posts"]) {
-      blogPosts.add(BlogPost.fromJson(blogPostJson));
-    }
-    return blogPosts;
+Future<List<Resource>> fetchResource({
+  required Resource resource,
+  required String path,
+  required String mainKey,
+}) async {
+  final response = await Dio().get("/resources/");
+  final List<Resource> resources = [];
+  for (var resourceJson in response.data[mainKey]) {
+    resources.add(resource.fromJson(resourceJson));
   }
+  return resources;
 }
