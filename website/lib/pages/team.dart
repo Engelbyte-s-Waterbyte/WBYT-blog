@@ -16,6 +16,7 @@ class Team extends StatelessWidget {
         heading: "Das Team",
         subHeading: "Unser Personal - voller Ehrgeiz und Motivation ",
         headingIcon: TablerIcons.alien,
+        quote: "Schowieda koa as! - Select queries sollten immer mit einem AS versehen werden!",
         child: Members(),
       ),
     );

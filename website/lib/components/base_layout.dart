@@ -5,6 +5,7 @@ import 'package:website/pages/home.dart' as $home;
 class BaseLayout extends StatelessWidget {
   const BaseLayout({
     Key? key,
+    required this.quote,
     required this.child,
     required this.heading,
     required this.subHeading,
@@ -15,6 +16,7 @@ class BaseLayout extends StatelessWidget {
   final String subHeading;
   final IconData headingIcon;
   final Widget child;
+  final String quote;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +24,12 @@ class BaseLayout extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
-          const Positioned(
+           Positioned(
             bottom: 20,
             left: 20,
             child: Text(
-              "Trusted by many people.",
-              style: TextStyle(fontSize: 16),
+              quote,
+              style: const TextStyle(fontSize: 16),
             ),
           ),
           Row(

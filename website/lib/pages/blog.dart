@@ -11,6 +11,7 @@ class Blog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BaseLayout(
+        quote: "Bei da Dokumentation is wie beim Sex - besser schlechter ois goakoana",
         heading: "Engelbyte's Waterbyte’s Blog",
         subHeading:
             "... verfasst von Projektmitarbeitern sowie Leasingpersonal",

@@ -14,6 +14,7 @@ class Projects extends StatelessWidget {
         heading: "Projekte",
         subHeading: "Innvoation bei Waterbyte",
         headingIcon: TablerIcons.ambulance,
+        quote: "Bei Select Queries sollte DISTINCT nicht mit die stinkt verwechselt werden",
         child: ProjectsWidget(),
       ),
     );
@@ -48,6 +49,7 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
                       name: project.name,
                       pic: project.pic,
                       description: project.description,
+                      slogan: project.slogan,
                       link: project.link,
                     ),
                 ],
@@ -64,6 +66,7 @@ class ProjectWidget extends StatelessWidget {
   final String pic;
   final String description;
   final String link;
+  final String slogan;
 
   const ProjectWidget({
     Key? key,
@@ -71,6 +74,7 @@ class ProjectWidget extends StatelessWidget {
     required this.pic,
     required this.description,
     required this.link,
+    required this.slogan,
   }) : super(key: key);
 
   @override
@@ -81,14 +85,10 @@ class ProjectWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 500,
-            width: 1000,
             color: Colors.green,
-            child: FittedBox(
-                child: Image.network(
-                  pic,
-                ),
-                fit: BoxFit.fill),
+            child: Image.network(
+              pic,
+            ),
           ),
           Row(
             children: [
@@ -105,11 +105,11 @@ class ProjectWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: Text(
-                          'voigschissena',
-                          style: TextStyle(
+                          slogan,
+                          style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
