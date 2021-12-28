@@ -48,7 +48,7 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
                       name: project.name,
                       pic: project.pic,
                       description: project.description,
-                      githubURL: project.githubURL,
+                      link: project.link,
                     ),
                 ],
               );
@@ -63,26 +63,26 @@ class ProjectWidget extends StatelessWidget {
   final String name;
   final String pic;
   final String description;
-  final String githubURL;
+  final String link;
 
   const ProjectWidget({
     Key? key,
     required this.name,
     required this.pic,
     required this.description,
-    required this.githubURL,
+    required this.link,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 400,
+      width: 1000,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 500,
-            width: 400,
+            width: 1000,
             color: Colors.green,
             child: FittedBox(
                 child: Image.network(
@@ -108,7 +108,7 @@ class ProjectWidget extends StatelessWidget {
                     const Padding(
                         padding: EdgeInsets.symmetric(vertical: 5.0),
                         child: Text(
-                          'i',
+                          'voigschissena',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
