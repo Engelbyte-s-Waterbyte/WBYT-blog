@@ -123,10 +123,9 @@ class Member extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 500,
               width: 400,
-              color: Colors.green,
               child: FittedBox(
                   child: Image.network(
                     memberPic,
