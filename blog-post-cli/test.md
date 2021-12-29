@@ -1,3 +1,3 @@
 # Hawara
 fslfkjsdkfls
-![wintersteigerKarriere.png](zeppes)
+![wintersteigerKarriereFR.png](zeppes)
