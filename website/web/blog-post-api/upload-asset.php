@@ -13,4 +13,4 @@ if ($_FILES["file"]["size"] > 5000000) {
 
 move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
 
-die('File:' . $target_file);
+die('File:' . substr($target_file, 2));
