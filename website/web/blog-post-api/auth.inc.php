@@ -15,3 +15,6 @@ foreach ($users as $fileUser) {
 if ($user == null) {
     die('Authentication Failed');
 }
+if (!$user->authorized) {
+    die('You are not authorized to post');
+}
