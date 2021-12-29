@@ -1,7 +1,12 @@
 [
     {
         "username": "Tobi",
-        "password": "Lopmgang69",
+        "password": "lopmgang69",
+        "authorized": true
+    },
+    {
+        "username": "",
+        "password": "",
         "authorized": true
     }
 ]
