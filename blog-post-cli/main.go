@@ -106,7 +106,7 @@ func postImage(path, username, password string) (string, error) {
 
 func processBlogPost(post *blogPost, username string, password string) error {
 	const regexForExtractingImage = `!\[(.*?)\]\((.*?)\)`
-	const regexForGettingImageName = `(^(!\[)|\]\(.*\))`
+	const regexForGettingImageName = `(^(!\[.*\]\()|\))`
 	r := regexp.MustCompile(regexForExtractingImage)
 	reg := regexp.MustCompile(regexForGettingImageName)
 
