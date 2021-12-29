@@ -45,6 +45,7 @@ class WaterbyteApp extends StatelessWidget {
       ),
     ];
     return MaterialApp(
+      title: "Engelbyte's Waterbyte",
       theme: ThemeData(fontFamily: "Inter"),
       onGenerateRoute: (RouteSettings settings) {
         Route? foundRoute = routes.firstWhere(
