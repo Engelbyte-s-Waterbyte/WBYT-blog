@@ -3,6 +3,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:website/components/base_layout.dart';
 import 'package:website/pages/blog.dart';
+import 'package:website/pages/not_found.dart';
 import 'package:website/resources/blog_post.dart' as resources;
 
 class BlogPost extends StatefulWidget {
@@ -15,7 +16,7 @@ class BlogPost extends StatefulWidget {
 
 class _BlogPostState extends State<BlogPost> {
   resources.BlogPost? blogPost;
-  bool loading = false;
+  bool loading = true;
 
   @override
   void initState() {
@@ -25,6 +26,9 @@ class _BlogPostState extends State<BlogPost> {
 
   @override
   Widget build(BuildContext context) {
+    if (!loading && blogPost == null) {
+      return const NotFound();
+    }
     return BaseLayout(
       heading: blogPost?.title ?? "",
       subHeading:
@@ -33,14 +37,13 @@ class _BlogPostState extends State<BlogPost> {
       quote: '',
       child: Column(
         children: [
-          if (blogPost != null)
-            blogPost == null
-                ? const CircularProgressIndicator()
-                : MarkdownWidget(
-                    data: blogPost!.post,
-                    loadingWidget: const CircularProgressIndicator(),
-                    shrinkWrap: true,
-                  ),
+          blogPost == null
+              ? const CircularProgressIndicator()
+              : MarkdownWidget(
+                  data: blogPost!.post,
+                  loadingWidget: const CircularProgressIndicator(),
+                  shrinkWrap: true,
+                ),
         ],
       ),
     );
@@ -54,7 +57,9 @@ class _BlogPostState extends State<BlogPost> {
       mainKey: "blog-posts",
     );
     setState(() {
-      blogPost = posts[widget.postIdx] as resources.BlogPost;
+      blogPost = (posts.length - 1 >= widget.postIdx
+          ? posts[widget.postIdx]
+          : null) as resources.BlogPost?;
       loading = false;
     });
   }
