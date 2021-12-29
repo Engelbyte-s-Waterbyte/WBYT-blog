@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"flag"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -35,7 +36,8 @@ func main() {
 	flag.StringVar(&thumbnailPath, "thumbnail", "", "Enter path to blog post thumbnail")
 	flag.Parse()
 
-	if filePath == "" || newBlogPost.Title == "" || newBlogPost.ThumbnailPath == "" || newBlogPost.Preview == "" || username == "" || password == "" {
+	fmt.Println("obakuma")
+	if username == "" || password == "" || filePath == "" || newBlogPost.Title == "" || newBlogPost.Preview == "" || thumbnailPath == "" {
 		flag.Usage()
 		return
 	}

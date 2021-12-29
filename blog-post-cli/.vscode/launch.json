@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "CLI",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "main.go",
+            "args": [
+                "-username=\"Zeppe\" -password=\"Hawara\" -path=\"test.md\" -title=\"Hawara in Romading\" -preview=\"depp\" -thumbnail=\"nodla.png\""
+            ]
+        }
+    ]
+}
