@@ -29,7 +29,7 @@ type blogPost struct {
 }
 
 func main() {
-	readAndReplaceImagePathsInMd("kek")
+	processBlogPost(nil)
 }
 
 func main2() {
@@ -63,7 +63,9 @@ func main2() {
 	}
 	newBlogPost.Post = string(fileContent)
 
-	// TODO
+	processBlogPost(&newBlogPost)
+
+	// publishBlogPost(newBlogPost)
 }
 
 func postImage(path, username, password string) (string, error) {
@@ -92,7 +94,7 @@ func postImage(path, username, password string) (string, error) {
 	return body2[5:], err
 }
 
-func readAndReplaceImagePathsInMd(path string) (imgPaths []string) {
+func processBlogPost(post *blogPost) error {
 	match, _ := regexp.MatchString("(?<alt>!\\[[^\\]]*\\])\\((?<filename>.*?)(?=\"|\\))\\)", "![kek](kek)")
 	fmt.Print(match)
 	return nil
