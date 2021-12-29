@@ -31,11 +31,59 @@
   <title>Engelbyte's Waterbyte</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="./favicon.png">
+  <style>
+    .center {
+      margin: auto;
+      width: 90%;
+      max-width: 200px;
+      margin-top: 25%;
+    }
+
+    .logo {
+      margin: auto;
+      display: block;
+      width: 100%;
+    }
+
+    .bar {
+      height: 4px;
+      border-radius: 2px;
+      width: 100%;
+      background-color: #8f8fff;
+    }
+
+    .small-bar {
+      background-color: blue;
+      width: 20px;
+      height: 1px;
+      animation: swing 2.5s ease-in-out infinite;
+    }
+
+    @keyframes swing {
+      0% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(180px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <img src="/img/WaterbyteLogo.png"
-    style="width: 100%; max-width: 200px; position: absolute; display: block; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+  <div class="center">
+    <img class="logo" src="/img/WaterbyteLogo.png">
+    <div class="bar">
+      <div class="small-bar"></div>
+      <div class="small-bar"></div>
+      <div class="small-bar"></div>
+    </div>
+  </div>
   <!-- This script installs service_worker.js to provide PWA functionality to
     application. For more information, see: https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>

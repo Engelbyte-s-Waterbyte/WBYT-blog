@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 90%;
+            max-width: 200px;
+            margin-top: 25%;
+        }
+
+        .logo {
+            margin: auto;
+            display: block;
+            width: 100%;
+        }
+
+        .bar {
+            height: 4px;
+            border-radius: 2px;
+            width: 100%;
+            background-color: #8f8fff;
+        }
+
+        .small-bar {
+            background-color: blue;
+            width: 20px;
+            height: 1px;
+            animation: swing 2.5s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(180px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <img class="logo" src="./web/img/WaterbyteLogo.png">
+        <div class="bar">
+            <div class="small-bar"></div>
+            <div class="small-bar"></div>
+            <div class="small-bar"></div>
+        </div>
+    </div>
+</body>
+
+</html>
