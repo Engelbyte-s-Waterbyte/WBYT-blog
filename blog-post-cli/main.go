@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"flag"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -18,7 +17,7 @@ import (
 )
 
 const (
-	ServerURL = "http://waterbyte.bplaced.net"
+	ServerURL = "http://194.163.130.122"
 )
 
 type blogPost struct {
@@ -28,11 +27,23 @@ type blogPost struct {
 	ThumbnailPath string
 }
 
-func main() {
-	processBlogPost(nil)
-}
+// func main() {
+// 	// post := "aufstehen ![zeppe](fads) ![zeppe](asdf)"
+// 	// const regexForExtractingImage = `!\[(.*?)\]\((.*?)\)`
+// 	// r := regexp.MustCompile(regexForExtractingImage)
+// 	// matches := r.FindAllString(post, -1)
+// 	// for _, match := range matches {
+// 	// 	regexForGettingImageName := `(^(!\[)|\]\(.*\))`
+// 	// 	reg := regexp.MustCompile(regexForGettingImageName)
+// 	// 	res := reg.ReplaceAllString(match, "")
+// 	// 	newPath := "loisl"
+// 	// 	post = strings.Replace(post, res, newPath, 1)
+// 	// 	fmt.Printf("%s\n", post)
 
-func main2() {
+// 	// }
+// }
+
+func main() {
 	var username string
 	var password string
 	var newBlogPost blogPost
@@ -63,9 +74,8 @@ func main2() {
 	}
 	newBlogPost.Post = string(fileContent)
 
-	processBlogPost(&newBlogPost)
-
-	// publishBlogPost(newBlogPost)
+	processBlogPost(&newBlogPost, username, password)
+	publishBlogPost(newBlogPost, username, password)
 }
 
 func postImage(path, username, password string) (string, error) {
@@ -94,14 +104,23 @@ func postImage(path, username, password string) (string, error) {
 	return body2[5:], err
 }
 
-func processBlogPost(post *blogPost) error {
-	match, _ := regexp.MatchString("(?<alt>!\\[[^\\]]*\\])\\((?<filename>.*?)(?=\"|\\))\\)", "![kek](kek)")
-	fmt.Print(match)
+func processBlogPost(post *blogPost, username string, password string) error {
+	const regexForExtractingImage = `!\[(.*?)\]\((.*?)\)`
+	const regexForGettingImageName = `(^(!\[)|\]\(.*\))`
+	r := regexp.MustCompile(regexForExtractingImage)
+	reg := regexp.MustCompile(regexForGettingImageName)
+
+	matches := r.FindAllString(post.Post, -1)
+	for _, match := range matches {
+		res := reg.ReplaceAllString(match, "")
+		newPath, _ := postImage(res, username, password)
+		post.Post = strings.Replace(post.Post, res, newPath, 1)
+	}
 	return nil
 }
 
 func publishBlogPost(post blogPost, username, password string) error {
-	var params url.Values
+	params := url.Values{}
 	params.Add("username", username)
 	params.Add("password", password)
 	params.Add("title", post.Title)
