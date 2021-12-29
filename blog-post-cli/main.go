@@ -71,7 +71,7 @@ func postImage(path, username, password string) (string, error) {
 	ppart, _ := writer.CreateFormField("password")
 	io.WriteString(ppart, password)
 	writer.Close()
-	r, _ := http.NewRequest("POST", "http://waterbyte.bplayed.net/blog-post-api/upload-asset.php", body)
+	r, _ := http.NewRequest("POST", "http://waterbyte.bplaced.net/blog-post-api/upload-asset.php", body)
 	client := http.Client{}
 	resp, err := client.Do(r)
 	if err != nil {
@@ -83,4 +83,8 @@ func postImage(path, username, password string) (string, error) {
 		return "", errors.New(body2)
 	}
 	return body2[5:], err
+}
+
+func readAndReplaceImagePathsInMd(path string) (imgPaths []string) {
+
 }
