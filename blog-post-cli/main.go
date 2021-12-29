@@ -74,8 +74,14 @@ func main() {
 	}
 	newBlogPost.Post = string(fileContent)
 
-	processBlogPost(&newBlogPost, username, password)
-	publishBlogPost(newBlogPost, username, password)
+	err = processBlogPost(&newBlogPost, username, password)
+	if err != nil {
+		log.Fatal("Error processing blog post:", err)
+	}
+	err = publishBlogPost(newBlogPost, username, password)
+	if err != nil {
+		log.Fatal("Error publishing post:", err)
+	}
 }
 
 func postImage(path, username, password string) (string, error) {
@@ -113,7 +119,10 @@ func processBlogPost(post *blogPost, username string, password string) error {
 	matches := r.FindAllString(post.Post, -1)
 	for _, match := range matches {
 		res := reg.ReplaceAllString(match, "")
-		newPath, _ := postImage(res, username, password)
+		newPath, err := postImage(res, username, password)
+		if err != nil {
+			return err
+		}
 		post.Post = strings.Replace(post.Post, res, newPath, 1)
 	}
 	return nil
