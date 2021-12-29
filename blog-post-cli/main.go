@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -23,6 +24,10 @@ type blogPost struct {
 }
 
 func main() {
+	readAndReplaceImagePathsInMd("kek")
+}
+
+func main2() {
 	var username string
 	var password string
 	var newBlogPost blogPost
@@ -36,7 +41,6 @@ func main() {
 	flag.StringVar(&thumbnailPath, "thumbnail", "", "Enter path to blog post thumbnail")
 	flag.Parse()
 
-	fmt.Println("obakuma")
 	if username == "" || password == "" || filePath == "" || newBlogPost.Title == "" || newBlogPost.Preview == "" || thumbnailPath == "" {
 		flag.Usage()
 		return
@@ -46,7 +50,7 @@ func main() {
 	newBlogPost.ThumbnailPath, err = postImage(thumbnailPath, username, password)
 
 	if err != nil {
-		log.Fatal("Error posting thumbnail", err)
+		log.Fatal("Error posting thumbnail:", err)
 	}
 	fileContent, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -56,8 +60,8 @@ func main() {
 
 	// TODO
 }
-func postImage(path, username, password string) (string, error) {
 
+func postImage(path, username, password string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", err
@@ -72,6 +76,7 @@ func postImage(path, username, password string) (string, error) {
 	io.WriteString(ppart, password)
 	writer.Close()
 	r, _ := http.NewRequest("POST", "http://waterbyte.bplaced.net/blog-post-api/upload-asset.php", body)
+	r.Header.Add("Content-Type", writer.FormDataContentType())
 	client := http.Client{}
 	resp, err := client.Do(r)
 	if err != nil {
@@ -86,5 +91,7 @@ func postImage(path, username, password string) (string, error) {
 }
 
 func readAndReplaceImagePathsInMd(path string) (imgPaths []string) {
-
+	match, _ := regexp.MatchString("(?<alt>!\\[[^\\]]*\\])\\((?<filename>.*?)(?=\"|\\))\\)", "![kek](kek)")
+	fmt.Print(match)
+	return nil
 }
