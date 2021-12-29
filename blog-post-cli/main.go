@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	ServerURL = "http://waterbyte.studio"
+	ServerURL = "https://waterbyte.studio"
 )
 
 type blogPost struct {
