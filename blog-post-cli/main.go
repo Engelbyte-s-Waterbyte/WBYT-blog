@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	ServerURL = "http://194.163.130.122"
+	ServerURL = "http://waterbyte.studio"
 )
 
 type blogPost struct {
@@ -26,22 +26,6 @@ type blogPost struct {
 	Post          string
 	ThumbnailPath string
 }
-
-// func main() {
-// 	// post := "aufstehen ![zeppe](fads) ![zeppe](asdf)"
-// 	// const regexForExtractingImage = `!\[(.*?)\]\((.*?)\)`
-// 	// r := regexp.MustCompile(regexForExtractingImage)
-// 	// matches := r.FindAllString(post, -1)
-// 	// for _, match := range matches {
-// 	// 	regexForGettingImageName := `(^(!\[)|\]\(.*\))`
-// 	// 	reg := regexp.MustCompile(regexForGettingImageName)
-// 	// 	res := reg.ReplaceAllString(match, "")
-// 	// 	newPath := "loisl"
-// 	// 	post = strings.Replace(post, res, newPath, 1)
-// 	// 	fmt.Printf("%s\n", post)
-
-// 	// }
-// }
 
 func main() {
 	var username string
