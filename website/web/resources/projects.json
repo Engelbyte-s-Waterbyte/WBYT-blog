@@ -1,0 +1,20 @@
+{
+    "projects": [
+      {
+        "name": "Charge",
+        "pic": "/img/projects/Charge.png",
+        "description": "Um es dem Steuerberater beim berechnen der Mietpreise leichter zu machen entwickelte WindhoseDaten eine intelligente Wpf-Anwendung. Waterbyte hat nun die Ehre im Rahmen des Syp-unterrichts mit Gertsche dieses System in das Netz einzupflanzen.",
+        "slogan": "Always ask for the most: Charge.",
+        "link":"https://github.com"
+        
+      },
+      {
+        "name": "Jamboree",
+        "pic": "/img/projects/Jamboree.png",
+        "description":"Die intelligente Jamboree App soll einem beim finden der am nähesten gelegenen und bestbewertesten Veranstaltungen helfen. Waterbyte macht diese App.",
+        "slogan": "Start exploring events and festivals nearby",
+        "link":"https://github.com"
+      }
+    ]
+  }
+  

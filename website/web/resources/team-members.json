@@ -1,0 +1,61 @@
+{
+  "list-member": [
+    {
+      "name": "Miks",
+      "position": "Projektleiter",
+      "pic": "/img/Ungar_Michael-1.jpg",
+      "description": "Kommunikation, Hobbyprogrammierer",
+      "founder": true
+    },
+    {
+      "name": "Tops",
+      "position": "Projektmitarbeiter",
+      "pic": "/img/Wimmer_Tobias-1.jpg",
+      "description": "Projektmotivation, Programmierer",
+      "founder": true
+    },
+    {
+      "name": "Sandele Groani",
+      "position": "Projektmitarbeiterstellvertreter",
+      "pic": "/img/Greinecker_Sandro-1.jpg",
+      "description": "Periodischer Chill, Statusbericht",
+      "founder": true
+    },
+    {
+      "name": "Andreas Aigner",
+      "position": "treuer Leasingarbeiter/Antipeopleware",
+      "pic": "/img/Aigner_Andreas-1.jpg",
+      "description": "Wurde schon bei einigen Projekten verwendet. Die Qualitäten dieser Aushilfe lassen allerdings zu wünschen übrig. Zumindest kommt dieser Spost billig."
+    },
+    {
+      "name": "Fischa",
+      "position": "Chayaware",
+      "pic": "/img/Fischer_Fabian-1.jpg",
+      "description": "Sieht aus wie Sperrer"
+    },
+    {
+      "name": "Nodla",
+      "position": "Konzentration",
+      "pic": "/img/Nadler_Florian-1.jpg",
+      "description": "Nodla!"
+    },
+    {
+      "name": "Alexander Karl Schallmeiner",
+      "position": "Gelegenheitsprogrammierer",
+      "pic": "/img/Schallmeiner_Alexander_Karl-1.jpg",
+      "description": "Spätestens nachdem das 5. Snus eingebaut wurde arbeitet dieses Individuum unaufhaltbar."
+    },
+    {
+      "name": "S. Marvin Feichtlbauer",
+      "position": "Team-koordinator/Stakeholding",
+      "pic": "/img/Simon-Marvin-Feichtlbauer.jpg",
+      "description": "Wenn er nicht gerade investiert, unterstützt er Engelbyte's Waterbyte mit seinen sozialen Kompetenzen."
+    },
+    {
+      "name": "G[eu|ö|☢︎]rtsch",
+      "position": "Blocker",
+      "pic": "/img/mb3.jpg",
+      "description": "Sorgt dafür, dass der Projektfortschritt nicht zu rasant ansteigt."
+    }
+  ]
+}

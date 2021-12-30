@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/idol-sketch.png"),
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.contain,
                 alignment: Alignment.centerRight,
               ),
             ),
