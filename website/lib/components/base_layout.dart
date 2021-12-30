@@ -63,6 +63,8 @@ class BaseLayout extends StatelessWidget {
               children: [
                 const SizedBox(width: 20),
                 InkWell(
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
                   onTap: () => Navigator.pushNamed(context, "/"),
                   child: Image.asset(
                     "assets/WaterbyteLogo.png",
@@ -95,6 +97,8 @@ class BaseLayout extends StatelessWidget {
                           child: Column(
                             children: [
                               InkWell(
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
                                 onTap: () => Navigator.pushNamed(context, "/"),
                                 child: Image.asset(
                                   "assets/WaterbyteLogo.png",
