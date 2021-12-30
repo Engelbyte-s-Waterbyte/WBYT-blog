@@ -38,74 +38,105 @@ class Blog extends StatelessWidget {
                 itemCount: blogPosts.length,
                 itemBuilder: (context, index) {
                   BlogPost blogPost = blogPosts[index] as BlogPost;
-                  return InkWell(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      "/blog/$index",
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image(
-                            image: blogPost.thumbnail,
-                            width: 202,
-                            height: 130,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(width: 40),
-                          Expanded(
-                            child: SizedBox(
-                              height: 130,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    blogPost.title,
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Text(
-                                    blogPost.preview,
-                                    maxLines: 4,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const Spacer(),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Autor: ${blogPost.creator}",
-                                        style: const TextStyle(
-                                            fontStyle: FontStyle.italic),
-                                      ),
-                                      const Spacer(),
-                                      const Text(
-                                        "Lesen Sie mehr >>",
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                  return buildBlogPost(context, index, blogPost);
                 },
               ),
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget buildBlogPost(BuildContext context, int index, BlogPost blogPost) {
+    final doBreak = MediaQuery.of(context).size.width < 630;
+    var autorRow = Row(
+      children: [
+        Text(
+          "Autor: ${blogPost.creator}",
+          style: const TextStyle(fontStyle: FontStyle.italic),
+        ),
+        const Spacer(),
+        const Text(
+          "Lesen Sie mehr >>",
+          style: TextStyle(
+            color: Colors.blue,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ],
+    );
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        "/blog/$index",
+      ),
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: doBreak
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image(
+                    image: blogPost.thumbnail,
+                    fit: BoxFit.fitWidth,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    blogPost.title,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(
+                    blogPost.preview,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 15),
+                  autorRow,
+                ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image(
+                    image: blogPost.thumbnail,
+                    width: 202,
+                    height: 130,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(width: 40),
+                  Expanded(
+                    child: SizedBox(
+                      height: 130,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            blogPost.title,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          Text(
+                            blogPost.preview,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Spacer(),
+                          autorRow,
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

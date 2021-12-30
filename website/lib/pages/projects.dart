@@ -87,43 +87,37 @@ class ProjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 1000,
+      padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
             pic,
           ),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 30),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Text(
-                          slogan,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    Text(description),
-                    const SizedBox(height: 30),
-                  ],
+              const SizedBox(height: 20),
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Text(
+                    slogan,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Text(description),
+              const SizedBox(height: 20),
             ],
           )
         ],

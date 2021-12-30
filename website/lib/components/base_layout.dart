@@ -21,12 +21,44 @@ class BaseLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final mobileBreak = width <= 1000;
+    final titleScalar = mobileBreak
+        ? Scalar(
+            context: context,
+            widthFrom: 375,
+            widthTo: 960,
+            from: 30,
+            to: 58,
+          )
+        : Scalar(
+            context: context,
+            widthFrom: 1000,
+            widthTo: 1300,
+            from: 36,
+            to: 58,
+          );
+    final subtitleScalar = mobileBreak
+        ? Scalar(
+            context: context,
+            widthFrom: 375,
+            widthTo: 960,
+            from: 16,
+            to: 38,
+          )
+        : Scalar(
+            context: context,
+            widthFrom: 1000,
+            widthTo: 1300,
+            from: 26,
+            to: 48,
+          );
+    final iconScalar = titleScalar;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (width <= 1000)
+          if (mobileBreak)
             Row(
               children: [
                 const SizedBox(width: 20),
@@ -34,11 +66,19 @@ class BaseLayout extends StatelessWidget {
                   onTap: () => Navigator.pushNamed(context, "/"),
                   child: Image.asset(
                     "assets/WaterbyteLogo.png",
-                    height: 150,
-                    width: 200,
+                    width: 150,
                   ),
                 ),
                 const Spacer(),
+                InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () => Navigator.pushNamed(context, "/"),
+                  child: const Icon(
+                    TablerIcons.menu_2,
+                    size: 50,
+                  ),
+                ),
+                const SizedBox(width: 30),
               ],
             ),
           Expanded(
@@ -47,7 +87,7 @@ class BaseLayout extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (width > 1000)
+                  if (!mobileBreak)
                     Row(
                       children: [
                         SizedBox(
@@ -98,26 +138,21 @@ class BaseLayout extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 60),
+                          if (width > 1000) const SizedBox(height: 60),
                           Row(
                             children: [
-                              Icon(headingIcon, size: 55),
+                              Icon(
+                                headingIcon,
+                                size: iconScalar.doubleValue,
+                              ),
                               const SizedBox(width: 20),
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 8),
                                   child: Text(
                                     heading,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.fade,
                                     style: TextStyle(
-                                      fontSize: Scalar(
-                                        context: context,
-                                        widthFrom: 800,
-                                        widthTo: 1250,
-                                        from: 25,
-                                        to: 58,
-                                      ).doubleValue,
+                                      fontSize: titleScalar.doubleValue,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -128,10 +163,8 @@ class BaseLayout extends StatelessWidget {
                           const SizedBox(height: 10),
                           Text(
                             subHeading,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 15,
+                            style: TextStyle(
+                              fontSize: subtitleScalar.doubleValue,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -141,14 +174,31 @@ class BaseLayout extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 30),
                 ],
               ),
             ),
           ),
-          Text(
-            quote,
-            textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 16),
+          Row(
+            children: [
+              const Spacer(),
+              Expanded(
+                flex: 3,
+                child: Text(
+                  quote,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontSize: Scalar(
+                      context: context,
+                      widthFrom: 375,
+                      widthTo: 1200,
+                      from: 15,
+                      to: 20,
+                    ).doubleValue,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
