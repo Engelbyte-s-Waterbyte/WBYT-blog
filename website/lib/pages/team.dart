@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:website/components/base_layout.dart';
+import 'package:website/pages/blog.dart';
+import 'package:website/resources/resource.dart';
 import 'package:website/resources/team_member.dart';
 
 class Team extends StatelessWidget {
@@ -16,7 +17,8 @@ class Team extends StatelessWidget {
         heading: "Das Team",
         subHeading: "Unser Personal - voller Ehrgeiz und Motivation ",
         headingIcon: TablerIcons.alien,
-        quote: "Schowieda koa as! - Select queries sollten immer mit einem AS versehen werden!",
+        quote:
+            "Schowieda koa as! - Select queries sollten immer mit einem AS versehen werden!",
         child: Members(),
       ),
     );
@@ -45,25 +47,33 @@ class _MembersState extends State<Members> {
           ),
         ),
         const SizedBox(height: 20),
-        FutureBuilder<List<TeamMember>>(
-            future: fetchTeamMembers(),
+        FutureBuilder<List<Resource>>(
+            future: fetchResource(
+              resource: const TeamMember(),
+              path: "team-members.json",
+              mainKey: "list-member",
+            ),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
-              List<TeamMember> listmembers =
-                  snapshot.data!.where((x) => x.founder).toList();
+              List<Resource> listmembers = snapshot.data!
+                  .where((x) => (x as TeamMember).founder)
+                  .toList();
               return Wrap(
                 spacing: 10.0,
                 runSpacing: 20.0,
                 children: [
-                  for (var member in listmembers)
-                    Member(
-                      memberDescription: member.description,
-                      memberName: member.name,
-                      memberPosition: member.position,
-                      memberPic: member.pic,
-                    ),
+                  for (var resource in listmembers)
+                    Builder(builder: (context) {
+                      final member = resource as TeamMember;
+                      return Member(
+                        memberDescription: member.description,
+                        memberName: member.name,
+                        memberPosition: member.position,
+                        memberPic: member.pic,
+                      );
+                    }),
                 ],
               );
             }),
@@ -76,24 +86,32 @@ class _MembersState extends State<Members> {
           ),
         ),
         const SizedBox(height: 40),
-        FutureBuilder<List<TeamMember>>(
-            future: fetchTeamMembers(),
+        FutureBuilder<List<Resource>>(
+            future: fetchResource(
+              resource: const TeamMember(),
+              path: "team-members.json",
+              mainKey: "list-member",
+            ),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
-              List<TeamMember> listmembers =
-                  snapshot.data!.where((x) => !x.founder).toList();
+              List<Resource> listmembers = snapshot.data!
+                  .where((x) => !(x as TeamMember).founder)
+                  .toList();
               return Wrap(
                 spacing: 10.0,
                 children: [
-                  for (var member in listmembers)
-                    Member(
-                      memberDescription: member.description,
-                      memberName: member.name,
-                      memberPosition: member.position,
-                      memberPic: member.pic,
-                    ),
+                  for (var resource in listmembers)
+                    Builder(builder: (context) {
+                      final member = resource as TeamMember;
+                      return Member(
+                        memberDescription: member.description,
+                        memberName: member.name,
+                        memberPosition: member.position,
+                        memberPic: member.pic,
+                      );
+                    }),
                 ],
               );
             }),
@@ -166,13 +184,4 @@ class Member extends StatelessWidget {
           ],
         ));
   }
-}
-
-Future<List<TeamMember>> fetchTeamMembers() async {
-  final response = await Dio().get("/resources/team-members.json");
-  final List<TeamMember> teamMembers = [];
-  for (var teamMemberJson in response.data["list-member"]) {
-    teamMembers.add(TeamMember.fromJson(teamMemberJson));
-  }
-  return teamMembers;
 }

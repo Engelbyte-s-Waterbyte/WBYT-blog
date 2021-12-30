@@ -1,5 +1,6 @@
+import 'package:website/resources/resource.dart';
 
-class TeamMember {
+class TeamMember extends Resource {
   final String name;
   final String position;
   final String pic;
@@ -7,17 +8,21 @@ class TeamMember {
   final bool founder;
 
   const TeamMember({
-    required this.name,
-    required this.position,
-    required this.pic,
-    required this.description,
-    required this.founder,
+    this.name = '',
+    this.position = '',
+    this.pic = '',
+    this.description = '',
+    this.founder = false,
   });
 
-  TeamMember.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        position = json["position"],
-        pic = json["pic"],
-        description = json["description"],
-        founder = json.containsKey("founder");
+  @override
+  Resource fromJson(Map<String, dynamic> json) {
+    return TeamMember(
+      name: json["name"],
+      position: json["position"],
+      pic: json["pic"],
+      description: json["description"],
+      founder: json.containsKey("founder"),
+    );
+  }
 }

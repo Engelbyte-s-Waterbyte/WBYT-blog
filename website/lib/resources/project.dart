@@ -1,5 +1,6 @@
+import 'package:website/resources/resource.dart';
 
-class Project {
+class Project extends Resource {
   final String name;
   final String pic;
   final String description;
@@ -7,17 +8,21 @@ class Project {
   final String slogan;
 
   const Project({
-    required this.name,
-    required this.pic,
-    required this.description,
-    required this.link,
-    required this.slogan
+    this.name = '',
+    this.pic = '',
+    this.description = '',
+    this.link = '',
+    this.slogan = '',
   });
 
-  Project.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        pic = json["pic"],
-        description = json["description"],
-        link = json["link"],
-        slogan = json["slogan"];
+  @override
+  Resource fromJson(Map<String, dynamic> json) {
+    return Project(
+      name: json["name"],
+      pic: json["pic"],
+      description: json["description"],
+      link: json["link"],
+      slogan: json["slogan"],
+    );
+  }
 }

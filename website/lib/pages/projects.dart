@@ -1,8 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:website/components/base_layout.dart';
+import 'package:website/pages/blog.dart';
 import 'package:website/resources/project.dart';
+import 'package:website/resources/resource.dart';
 
 class Projects extends StatelessWidget {
   const Projects({Key? key}) : super(key: key);
@@ -14,7 +15,8 @@ class Projects extends StatelessWidget {
         heading: "Projekte",
         subHeading: "Innvoation bei Waterbyte",
         headingIcon: TablerIcons.ambulance,
-        quote: "Bei Select Queries sollte DISTINCT nicht mit die stinkt verwechselt werden",
+        quote:
+            "Bei Select Queries sollte DISTINCT nicht mit die stinkt verwechselt werden",
         child: ProjectsWidget(),
       ),
     );
@@ -35,23 +37,29 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
-        FutureBuilder<List<Project>>(
-            future: fetchProjects(),
+        FutureBuilder<List<Resource>>(
+            future: fetchResource(
+                resource: const Project(),
+                path: "projects.json",
+                mainKey: "projects"),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
-              List<Project> projects = snapshot.data!.toList();
+              List<Resource> projects = snapshot.data!.toList();
               return Column(
                 children: [
-                  for (var project in projects)
-                    ProjectWidget(
-                      name: project.name,
-                      pic: project.pic,
-                      description: project.description,
-                      slogan: project.slogan,
-                      link: project.link,
-                    ),
+                  for (var resource in projects)
+                    Builder(builder: (context) {
+                      final project = resource as Project;
+                      return ProjectWidget(
+                        name: project.name,
+                        pic: project.pic,
+                        description: project.description,
+                        slogan: project.slogan,
+                        link: project.link,
+                      );
+                    }),
                 ],
               );
             }),
@@ -122,13 +130,4 @@ class ProjectWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<List<Project>> fetchProjects() async {
-  final response = await Dio().get("/resources/projects.json");
-  final List<Project> projects = [];
-  for (var projectJson in response.data["projects"]) {
-    projects.add(Project.fromJson(projectJson));
-  }
-  return projects;
 }
