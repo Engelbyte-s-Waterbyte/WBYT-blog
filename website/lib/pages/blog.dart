@@ -33,13 +33,15 @@ class Blog extends StatelessWidget {
             List<Resource> blogPosts = snapshot.data ?? [];
             return ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 569),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: blogPosts.length,
-                itemBuilder: (context, index) {
-                  BlogPost blogPost = blogPosts[index] as BlogPost;
-                  return buildBlogPost(context, index, blogPost);
-                },
+              child: Column(
+                children: [
+                  for (var index = 0; index < blogPosts.length; ++index)
+                    buildBlogPost(
+                      context,
+                      index,
+                      blogPosts[index] as BlogPost,
+                    ),
+                ],
               ),
             );
           },
@@ -69,7 +71,7 @@ class Blog extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushNamed(
         context,
-        "/blog/$index",
+        "/blog/${blogPost.id}",
       ),
       borderRadius: BorderRadius.circular(20),
       child: Padding(
@@ -147,7 +149,9 @@ Future<List<Resource>> fetchResource({
   required String path,
   required String mainKey,
 }) async {
-  final response = await Dio().get("/resources/" + path);
+  final response = await Dio().get(
+    "/resources/fetch-resource.php?resource=" + path,
+  );
   final List<Resource> resources = [];
   for (var resourceJson in response.data[mainKey]) {
     resources.add(resource.fromJson(resourceJson));

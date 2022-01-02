@@ -30,7 +30,7 @@ class WaterbyteApp extends StatelessWidget {
       Route(
         '/blog/[0-9]+',
         (context) => BlogPost(
-          postIdx: int.parse(
+          postId: int.parse(
             ModalRoute.of(context)!.settings.name!.split("/")[2],
           ),
         ),

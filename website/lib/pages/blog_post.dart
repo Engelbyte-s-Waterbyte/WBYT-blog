@@ -5,10 +5,11 @@ import 'package:website/components/base_layout.dart';
 import 'package:website/pages/blog.dart';
 import 'package:website/pages/not_found.dart';
 import 'package:website/resources/blog_post.dart' as resources;
+import 'package:website/resources/resource.dart';
 
 class BlogPost extends StatefulWidget {
-  const BlogPost({Key? key, required this.postIdx}) : super(key: key);
-  final int postIdx;
+  const BlogPost({Key? key, required this.postId}) : super(key: key);
+  final int postId;
 
   @override
   State<BlogPost> createState() => _BlogPostState();
@@ -57,9 +58,11 @@ class _BlogPostState extends State<BlogPost> {
       mainKey: "blog-posts",
     );
     setState(() {
-      blogPost = (posts.length - 1 >= widget.postIdx
-          ? posts[widget.postIdx]
-          : null) as resources.BlogPost?;
+      // ignore: unnecessary_cast
+      blogPost = posts.cast<resources.BlogPost?>().firstWhere(
+            (blogPost) => blogPost!.id == widget.postId,
+            orElse: () => null,
+          ) as resources.BlogPost?;
       loading = false;
     });
   }

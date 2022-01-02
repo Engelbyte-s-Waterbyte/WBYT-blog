@@ -3,6 +3,7 @@
 require('auth.inc.php');
 
 $new_blog_post = array(
+    'id' => uniqid(),
     'title' => $_POST["title"],
     'preview' => $_POST["preview"],
     'post' => $_POST["post"],
