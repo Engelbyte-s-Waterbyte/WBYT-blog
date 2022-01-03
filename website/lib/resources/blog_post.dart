@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:website/resources/resource.dart';
 
 class BlogPost extends Resource {
-  final int id;
+  final String id;
   final String title;
   final String preview;
   final String post;
@@ -10,7 +10,7 @@ class BlogPost extends Resource {
   final String thumbnailURL;
 
   const BlogPost({
-    this.id = 0,
+    this.id = '',
     this.title = '',
     this.preview = '',
     this.post = '',

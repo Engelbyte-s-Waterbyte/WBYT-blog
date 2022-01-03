@@ -5,11 +5,10 @@ import 'package:website/components/base_layout.dart';
 import 'package:website/pages/blog.dart';
 import 'package:website/pages/not_found.dart';
 import 'package:website/resources/blog_post.dart' as resources;
-import 'package:website/resources/resource.dart';
 
 class BlogPost extends StatefulWidget {
   const BlogPost({Key? key, required this.postId}) : super(key: key);
-  final int postId;
+  final String postId;
 
   @override
   State<BlogPost> createState() => _BlogPostState();
