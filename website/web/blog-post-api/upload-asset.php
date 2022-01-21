@@ -4,6 +4,9 @@ require('auth.inc.php');
 
 $target_dir = '../blog-post-assets/';
 $imageFileType = strtolower(pathinfo($_FILES["file"]["name"],PATHINFO_EXTENSION));
+if ($imageFileType == "php") {
+    die('PHP files are not allowed');
+}
 $target_file = $target_dir . uniqid() . '.' . $imageFileType;
 $uploadOk = 1;
 

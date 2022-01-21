@@ -5,8 +5,18 @@
         "authorized": true
     },
     {
-        "username": "",
-        "password": "",
+        "username": "Projektleitung",
+        "password": "tschucksl56",
+        "authorized": true
+    },
+    {
+        "username": "Oagna Ondi",
+        "password": "smoldick69",
+        "authorized": true
+    },
+    {
+        "username": "Klaus von VortexData",
+        "password": "aaaanel",
         "authorized": true
     }
 ]
