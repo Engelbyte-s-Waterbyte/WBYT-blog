@@ -32,7 +32,7 @@ class Blog extends StatelessWidget {
             }
             List<Resource> blogPosts = snapshot.data ?? [];
             return ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 569),
+              constraints: const BoxConstraints(maxWidth: 669),
               child: Column(
                 children: [
                   for (var index = 0; index < blogPosts.length; ++index)

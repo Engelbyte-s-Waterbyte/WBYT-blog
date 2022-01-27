@@ -43,6 +43,7 @@ class _BlogPostState extends State<BlogPost> {
                   data: blogPost!.post,
                   loadingWidget: const CircularProgressIndicator(),
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
         ],
       ),

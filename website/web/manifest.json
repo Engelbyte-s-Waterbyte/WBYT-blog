@@ -3,7 +3,7 @@
     "short_name": "Waterbyte",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0023BF",
+    "background_color": "#FFFFFF",
     "theme_color": "#0023BF",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
