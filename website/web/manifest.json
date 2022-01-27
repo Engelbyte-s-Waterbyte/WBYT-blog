@@ -1,11 +1,11 @@
 {
-    "name": "Waterbyte",
+    "name": "Engelbyte's Waterbyte",
     "short_name": "Waterbyte",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#0023BF",
-    "description": "A new Flutter project.",
+    "description": "Die offizielle Website des Projektrealisationsunternehmen Engelbyte's Waterbyte.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
