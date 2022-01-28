@@ -150,7 +150,7 @@ Future<List<Resource>> fetchResource({
   required String mainKey,
 }) async {
   final response = await Dio().get(
-    "/resources/fetch-resource.php?resource=" + path,
+    "/fetch-resource/" + path,
   );
   final List<Resource> resources = [];
   for (var resourceJson in response.data[mainKey]) {

@@ -14,23 +14,18 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/Engelbyte-s-Waterbyte/WBYT-blog/waterbyte"
 )
 
 const (
 	ServerURL = "https://waterbyte.studio"
 )
 
-type blogPost struct {
-	Title         string
-	Preview       string
-	Post          string
-	ThumbnailPath string
-}
-
 func main() {
 	var username string
 	var password string
-	var newBlogPost blogPost
+	var newBlogPost waterbyte.BlogPost
 	var filePath string
 	var thumbnailPath string
 	flag.StringVar(&username, "username", "", "Enter username")
@@ -94,7 +89,7 @@ func postImage(path, username, password string) (string, error) {
 	return body2[5:], err
 }
 
-func processBlogPost(post *blogPost, username string, password string) error {
+func processBlogPost(post *waterbyte.BlogPost, username string, password string) error {
 	const regexForExtractingImage = `!\[(.*?)\]\((.*?)\)`
 	const regexForGettingImageName = `(^(!\[.*\]\()|\))`
 	r := regexp.MustCompile(regexForExtractingImage)
@@ -112,7 +107,7 @@ func processBlogPost(post *blogPost, username string, password string) error {
 	return nil
 }
 
-func publishBlogPost(post blogPost, username, password string) error {
+func publishBlogPost(post waterbyte.BlogPost, username, password string) error {
 	params := url.Values{}
 	params.Add("username", username)
 	params.Add("password", password)
