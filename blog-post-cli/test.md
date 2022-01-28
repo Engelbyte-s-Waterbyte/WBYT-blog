@@ -1,3 +1,0 @@
-# Hawara
-fslfkjsdkfls
-![](wintersteigerKarriereFR.png)
