@@ -23,7 +23,9 @@ func main() {
 
 	router.GET("/rss", handleRss)
 	router.POST("/blog-post-api/upload-post", parseForm(authenticate(handleBlogPostUpload)))
+	router.POST("/blog-post-api/upload-post.php", parseForm(authenticate(handleBlogPostUpload)))
 	router.POST("/blog-post-api/upload-asset", parseForm(authenticate(handleAssetUpload)))
+	router.POST("/blog-post-api/upload-asset.php", parseForm(authenticate(handleAssetUpload)))
 	router.GET("/fetch-resource/:resource", handleFetchResource)
 
 	http.ListenAndServe(":11047", router)

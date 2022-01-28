@@ -77,7 +77,7 @@ func postImage(path, username, password string) (string, error) {
 	ppart, _ := writer.CreateFormField("password")
 	io.WriteString(ppart, password)
 	writer.Close()
-	resp, err := http.Post(ServerURL+"/blog-post-api/upload-asset.php", writer.FormDataContentType(), body)
+	resp, err := http.Post(ServerURL+"/blog-post-api/upload-asset", writer.FormDataContentType(), body)
 	if err != nil {
 		return "", err
 	}
@@ -116,7 +116,7 @@ func publishBlogPost(post waterbyte.BlogPost, username, password string) error {
 	params.Add("post", post.Post)
 	params.Add("thumbnail", post.ThumbnailPath)
 
-	resp, err := http.PostForm(ServerURL+"/blog-post-api/upload-post.php", params)
+	resp, err := http.PostForm(ServerURL+"/blog-post-api/upload-post", params)
 	if err != nil {
 		return err
 	}
