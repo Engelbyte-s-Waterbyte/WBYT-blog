@@ -28,7 +28,7 @@ class WaterbyteApp extends StatelessWidget {
         (context) => const Blog(),
       ),
       Route(
-        '/blog/[0-9A-z]+',
+        '/blog/[0-9A-z\-]+',
         (context) => BlogPost(
           postId: ModalRoute.of(context)!.settings.name!.split("/")[2],
         ),

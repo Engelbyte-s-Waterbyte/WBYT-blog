@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
 
 	"github.com/Engelbyte-s-Waterbyte/WBYT-blog/waterbyte"
+	"github.com/gorilla/feeds"
 	"github.com/julienschmidt/httprouter"
 	uuid "github.com/nu7hatch/gouuid"
 )
@@ -21,18 +23,58 @@ const (
 func main() {
 	router := httprouter.New()
 
-	router.GET("/rss", handleRss)
-	router.POST("/blog-post-api/upload-post", parseForm(authenticate(handleBlogPostUpload)))
-	router.POST("/blog-post-api/upload-post.php", parseForm(authenticate(handleBlogPostUpload)))
-	router.POST("/blog-post-api/upload-asset", parseForm(authenticate(handleAssetUpload)))
-	router.POST("/blog-post-api/upload-asset.php", parseForm(authenticate(handleAssetUpload)))
+	router.GET("/feed/rss", handleRss)
+	router.POST("/blog-post-api/upload-post", parseForm(false, authenticate(handleBlogPostUpload)))
+	router.POST("/blog-post-api/upload-post.php", parseForm(false, authenticate(handleBlogPostUpload)))
+	router.POST("/blog-post-api/upload-asset", parseForm(true, authenticate(handleAssetUpload)))
+	router.POST("/blog-post-api/upload-asset.php", parseForm(true, authenticate(handleAssetUpload)))
 	router.GET("/fetch-resource/:resource", handleFetchResource)
 
 	http.ListenAndServe(":11047", router)
 }
 
 func handleRss(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	time.Now().Format(time.RFC3339)
+	file, err := ioutil.ReadFile(blogPostsFile)
+	if err != nil {
+		io.WriteString(w, err.Error())
+		return
+	}
+	blogPosts := make(map[string][]waterbyte.BlogPost)
+	if err := json.Unmarshal(file, &blogPosts); err != nil {
+		io.WriteString(w, err.Error())
+		return
+	}
+
+	feed := &feeds.Feed{
+		Title:       "Waterbyte Blog",
+		Link:        &feeds.Link{Href: "https://waterbyte.studio"},
+		Description: "Die aktuellsten Neuigkeiten aus der Waterbyte Entwicklungszentrale.",
+		Author:      &feeds.Author{Name: "Waterbyte", Email: "office@waterbyte.studio"},
+		Created:     time.Now(),
+	}
+
+	for _, blogPost := range blogPosts["blog-posts"] {
+		authorEmail := strings.ToLower(blogPost.Creator)
+		authorEmail = strings.ReplaceAll(authorEmail, " ", "-")
+		authorEmail = strings.ReplaceAll(authorEmail, "(", "")
+		authorEmail = strings.ReplaceAll(authorEmail, ")", "")
+		authorEmail += "@waterbyte.studio"
+		feed.Items = append(feed.Items, &feeds.Item{
+			Title:       blogPost.Title,
+			Link:        &feeds.Link{Href: "https://www.waterbyte.studio/blog/" + blogPost.ID},
+			Description: blogPost.Preview,
+			Author:      &feeds.Author{Name: blogPost.Creator, Email: authorEmail},
+			Created:     blogPost.PublishedAt,
+		})
+	}
+
+	rss, err := feed.ToRss()
+	if err != nil {
+		log.Println("Error generating rss feed:", err)
+		return
+	}
+
+	io.WriteString(w, rss)
 }
 
 func handleBlogPostUpload(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -46,7 +88,7 @@ func handleBlogPostUpload(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		Title:         r.Form.Get("title"),
 		Preview:       r.Form.Get("preview"),
 		Post:          r.Form.Get("post"),
-		Creator:       r.Form.Get("creator"),
+		Creator:       r.Form.Get("username"),
 		ThumbnailPath: r.Form.Get("thumbnail"),
 		PublishedAt:   time.Now(),
 	}
@@ -93,7 +135,7 @@ func handleAssetUpload(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 	newId, err := uuid.NewV4()
 	fileNameParts := strings.Split(handler.Filename, ".")
 	newFileName := newId.String() + "." + fileNameParts[len(fileNameParts)-1]
-	if err := ioutil.WriteFile(filepath.Join("/var/www/waterbyte.studio/www/blog-post-assets/", newFileName), fileContent, 0600); err != nil {
+	if err := ioutil.WriteFile(filepath.Join("/var/www/waterbyte.studio/www/blog-post-assets/", newFileName), fileContent, 0777); err != nil {
 		io.WriteString(w, err.Error())
 		return
 	}
@@ -126,9 +168,15 @@ func handleFetchResource(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 	w.Write(file)
 }
 
-func parseForm(next httprouter.Handle) httprouter.Handle {
+func parseForm(multiPart bool, next httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-		if err := r.ParseMultipartForm(5 << 20); err != nil {
+		var err error
+		if multiPart {
+			err = r.ParseMultipartForm(5 << 20)
+		} else {
+			err = r.ParseForm()
+		}
+		if err != nil {
 			io.WriteString(w, err.Error())
 			return
 		}
