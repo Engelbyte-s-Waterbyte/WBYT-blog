@@ -24,23 +24,19 @@ func main() {
 	router := httprouter.New()
 
 	router.GET("/feed/rss", handleRss)
-	router.POST("/blog-post-api/upload-post", parseForm(false, authenticate(handleBlogPostUpload)))
-	router.POST("/blog-post-api/upload-post.php", parseForm(false, authenticate(handleBlogPostUpload)))
-	router.POST("/blog-post-api/upload-asset", parseForm(true, authenticate(handleAssetUpload)))
-	router.POST("/blog-post-api/upload-asset.php", parseForm(true, authenticate(handleAssetUpload)))
+	router.POST("/blog-post-api/upload-post", parseForm(false, phpAuthenticate(handleBlogPostUpload)))
+	router.POST("/blog-post-api/upload-post.php", parseForm(false, phpAuthenticate(handleBlogPostUpload)))
+	router.POST("/blog-post-api/upload-asset", parseForm(true, phpAuthenticate(handleAssetUpload)))
+	router.POST("/blog-post-api/upload-asset.php", parseForm(true, phpAuthenticate(handleAssetUpload)))
+	router.DELETE("/blog-post-api/delete-post/:delete-id", authenticate(handleBlogPostDelete))
 	router.GET("/fetch-resource/:resource", handleFetchResource)
 
 	http.ListenAndServe(":11047", router)
 }
 
 func handleRss(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	file, err := ioutil.ReadFile(blogPostsFile)
+	blogPosts, err := readBlogPosts()
 	if err != nil {
-		io.WriteString(w, err.Error())
-		return
-	}
-	blogPosts := make(map[string][]waterbyte.BlogPost)
-	if err := json.Unmarshal(file, &blogPosts); err != nil {
 		io.WriteString(w, err.Error())
 		return
 	}
@@ -93,24 +89,15 @@ func handleBlogPostUpload(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		PublishedAt:   time.Now(),
 	}
 
-	file, err := ioutil.ReadFile(blogPostsFile)
+	blogPosts, err := readBlogPosts()
 	if err != nil {
-		io.WriteString(w, err.Error())
-		return
-	}
-	blogPosts := make(map[string][]waterbyte.BlogPost)
-	if err := json.Unmarshal(file, &blogPosts); err != nil {
 		io.WriteString(w, err.Error())
 		return
 	}
 
 	blogPosts["blog-posts"] = append([]waterbyte.BlogPost{newBlogPost}, blogPosts["blog-posts"]...)
-	newContent, err := json.MarshalIndent(blogPosts, "", "\t")
+	err = saveBlogPosts(blogPosts)
 	if err != nil {
-		io.WriteString(w, err.Error())
-		return
-	}
-	if err := ioutil.WriteFile(blogPostsFile, newContent, 0600); err != nil {
 		io.WriteString(w, err.Error())
 		return
 	}
@@ -168,6 +155,57 @@ func handleFetchResource(w http.ResponseWriter, r *http.Request, p httprouter.Pa
 	w.Write(file)
 }
 
+func handleBlogPostDelete(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	deleteId := p.ByName("delete-id")
+	blogPosts, err := readBlogPosts()
+	if err != nil {
+		io.WriteString(w, err.Error())
+		return
+	}
+
+	blogPostIdx := -1
+	for idx, post := range blogPosts["blog-posts"] {
+		if post.ID == deleteId {
+			blogPostIdx = idx
+			break
+		}
+	}
+	if blogPostIdx == -1 {
+		io.WriteString(w, "success")
+		return
+	}
+	blogPosts["blog-posts"] = append(blogPosts["blog-posts"][:blogPostIdx], blogPosts["blog-posts"][blogPostIdx+1:]...)
+	err = saveBlogPosts(blogPosts)
+	if err != nil {
+		io.WriteString(w, err.Error())
+		return
+	}
+	io.WriteString(w, "success")
+}
+
+func readBlogPosts() (map[string][]waterbyte.BlogPost, error) {
+	file, err := ioutil.ReadFile(blogPostsFile)
+	if err != nil {
+		return map[string][]waterbyte.BlogPost{}, err
+	}
+	blogPosts := make(map[string][]waterbyte.BlogPost)
+	if err := json.Unmarshal(file, &blogPosts); err != nil {
+		return map[string][]waterbyte.BlogPost{}, err
+	}
+	return blogPosts, nil
+}
+
+func saveBlogPosts(blogPosts map[string][]waterbyte.BlogPost) error {
+	newContent, err := json.MarshalIndent(blogPosts, "", "\t")
+	if err != nil {
+		return err
+	}
+	if err := ioutil.WriteFile(blogPostsFile, newContent, 0600); err != nil {
+		return err
+	}
+	return nil
+}
+
 func parseForm(multiPart bool, next httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		var err error
@@ -184,10 +222,43 @@ func parseForm(multiPart bool, next httprouter.Handle) httprouter.Handle {
 	}
 }
 
-func authenticate(next httprouter.Handle) httprouter.Handle {
+func phpAuthenticate(next httprouter.Handle) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		username := r.Form.Get("username")
 		password := r.Form.Get("password")
+		file, err := ioutil.ReadFile("/var/www/waterbyte.studio/users.json")
+		if err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+		var users []waterbyte.User
+		if err := json.Unmarshal(file, &users); err != nil {
+			io.WriteString(w, err.Error())
+			return
+		}
+		var user *waterbyte.User
+		for _, rUser := range users {
+			if rUser.Username == username && rUser.Password == password {
+				user = &rUser
+				break
+			}
+		}
+		if user == nil {
+			io.WriteString(w, "Authentication Failed")
+			return
+		}
+		if !user.Authorized {
+			io.WriteString(w, "You are not authorized to post")
+			return
+		}
+		next(w, r, p)
+	}
+}
+
+func authenticate(next httprouter.Handle) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+		parts := strings.Split(r.Header.Get("authorization"), ",")
+		username, password := parts[0], parts[1]
 		file, err := ioutil.ReadFile("/var/www/waterbyte.studio/users.json")
 		if err != nil {
 			io.WriteString(w, err.Error())

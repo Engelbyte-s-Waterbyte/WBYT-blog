@@ -28,18 +28,28 @@ func main() {
 	var newBlogPost waterbyte.BlogPost
 	var filePath string
 	var thumbnailPath string
+	var deleteId string
 	flag.StringVar(&username, "username", "", "Enter username")
 	flag.StringVar(&password, "password", "", "Enter password")
 	flag.StringVar(&filePath, "path", "", "Enter path to markdown file containing blog post content")
 	flag.StringVar(&newBlogPost.Title, "title", "", "Enter blog post title")
 	flag.StringVar(&newBlogPost.Preview, "preview", "", "Enter preview text")
 	flag.StringVar(&thumbnailPath, "thumbnail", "", "Enter path to blog post thumbnail")
+	flag.StringVar(&deleteId, "delete id", "", "Enter the id of the blog post to delete")
 	flag.Parse()
 
-	if username == "" || password == "" || filePath == "" || newBlogPost.Title == "" || newBlogPost.Preview == "" || thumbnailPath == "" {
+	if (username == "" || password == "" || filePath == "" || newBlogPost.Title == "" || newBlogPost.Preview == "" || thumbnailPath == "") && deleteId == "" {
 		flag.Usage()
 		return
 	}
+	if deleteId == "" {
+		postNewBlogPost(username, password, newBlogPost, filePath, thumbnailPath)
+	} else {
+		deleteBlogPost(username, password, deleteId)
+	}
+}
+
+func postNewBlogPost(username, password string, newBlogPost waterbyte.BlogPost, filePath, thumbnailPath string) {
 	var err error
 
 	newBlogPost.ThumbnailPath, err = postImage(thumbnailPath, username, password)
@@ -126,4 +136,24 @@ func publishBlogPost(post waterbyte.BlogPost, username, password string) error {
 		return errors.New(body)
 	}
 	return nil
+}
+
+func deleteBlogPost(username, password, deleteId string) {
+	client := &http.Client{}
+	req, err := http.NewRequest("DELETE", ServerURL+"/blog-post-api/delete-post/"+deleteId, nil)
+	if err != nil {
+		log.Fatal("Error 1:", err)
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatal("Error 2:", err)
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal("Error 3:", err)
+	}
+	bodyStr := string(body)
+	if bodyStr != "success" {
+		log.Fatal("Error 4:", err)
+	}
 }
